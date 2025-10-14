@@ -8,16 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import praksa.zadatak.dto.LoginRequestDTO;
 import praksa.zadatak.dto.LoginResponseDTO;
+import praksa.zadatak.service.AuthService;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/public/auth")
 public class PublicAuthController {
+    private final AuthService authService;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(
             @RequestBody LoginRequestDTO request
             ) {
-        return null;
+        return ResponseEntity.ok(
+                authService.login(request)
+        );
     }
 }

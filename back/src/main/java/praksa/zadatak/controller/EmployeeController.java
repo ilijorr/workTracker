@@ -8,16 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import praksa.zadatak.dto.CreateEmployeeRequestDTO;
 import praksa.zadatak.dto.EmployeeDTO;
+import praksa.zadatak.service.EmployeeService;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/employee")
 public class EmployeeController {
+    private final EmployeeService employeeService;
 
     @PostMapping()
     public ResponseEntity<EmployeeDTO> create(
             @RequestBody CreateEmployeeRequestDTO request
             ) {
-        return null;
+        return ResponseEntity.ok(
+                employeeService.create(request)
+        );
     }
 }

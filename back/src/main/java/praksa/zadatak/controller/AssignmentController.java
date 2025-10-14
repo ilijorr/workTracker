@@ -8,16 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import praksa.zadatak.dto.AssignmentDTO;
 import praksa.zadatak.dto.CreateAssignmentRequestDTO;
+import praksa.zadatak.service.AssignmentService;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/assignment")
 public class AssignmentController {
+    private final AssignmentService assignmentService;
 
     @PostMapping
     public ResponseEntity<AssignmentDTO> create(
             @RequestBody CreateAssignmentRequestDTO request
             ) {
-        return null;
+        return ResponseEntity.ok(
+                assignmentService.create(request)
+        );
     }
 }

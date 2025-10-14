@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.CreateProjectRequestDTO;
 import praksa.zadatak.dto.ProjectDTO;
+import praksa.zadatak.service.ProjectService;
 
 import java.util.List;
 
@@ -12,23 +13,30 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/project")
 public class ProjectController {
+    private final ProjectService projectService;
 
     @PostMapping
     public ResponseEntity<ProjectDTO> create(
             @RequestBody CreateProjectRequestDTO request
             ) {
-        return null;
+        return ResponseEntity.ok(
+                projectService.create(request)
+        );
     }
 
     @GetMapping
     public ResponseEntity<List<ProjectDTO>> get() {
-        return null;
+        return ResponseEntity.ok(
+                projectService.get()
+        );
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProjectDTO> get(
-            @PathVariable("id") Integer id
+            @PathVariable("id") Long id
     ) {
-        return null;
+        return ResponseEntity.ok(
+                projectService.get(id)
+        );
     }
 }
