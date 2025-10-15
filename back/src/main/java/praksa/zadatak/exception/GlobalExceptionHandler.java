@@ -35,6 +35,18 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, status);
     }
 
+    @ExceptionHandler(NotAssignedException.class)
+    public ResponseEntity<ErrorResponse> handleNotAssigned(
+            @NotNull NotAssignedException exception, HttpServletRequest request
+    ) {
+        HttpStatus status = extractHttpStatus(exception);
+        ErrorResponse errorResponse = new ErrorResponse(
+                status.value(), exception.getMessage(), request.getRequestURI()
+        );
+
+        return new ResponseEntity<>(errorResponse, status);
+    }
+
     private HttpStatus extractHttpStatus(Exception exception) {
         Class<?> exceptionClass = exception.getClass();
         while (exceptionClass != null) {
