@@ -15,35 +15,35 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleException(
             @NotNull Exception exception, HttpServletRequest request
     ) {
-        HttpStatus status = extractHttpStatus(exception);
-        ErrorResponse errorResponse = new ErrorResponse(
-                status.value(), exception.getMessage(), request.getRequestURI()
-        );
-
-        return new ResponseEntity<>(errorResponse, status);
+        return buildErrorResponse(exception, request);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFound(
             @NotNull ResourceNotFoundException exception, HttpServletRequest request
     ) {
-        HttpStatus status = extractHttpStatus(exception);
-        ErrorResponse errorResponse = new ErrorResponse(
-                status.value(), exception.getMessage(), request.getRequestURI()
-        );
-
-        return new ResponseEntity<>(errorResponse, status);
+        return buildErrorResponse(exception, request);
     }
 
     @ExceptionHandler(NotAssignedException.class)
     public ResponseEntity<ErrorResponse> handleNotAssigned(
             @NotNull NotAssignedException exception, HttpServletRequest request
     ) {
+        return buildErrorResponse(exception, request);
+    }
+
+    @ExceptionHandler(InvalidDateRangeException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidDateRange(
+            @NotNull InvalidDateRangeException exception, HttpServletRequest request
+    ) {
+        return buildErrorResponse(exception, request);
+    }
+
+    private ResponseEntity<ErrorResponse> buildErrorResponse(Exception exception, HttpServletRequest request) {
         HttpStatus status = extractHttpStatus(exception);
         ErrorResponse errorResponse = new ErrorResponse(
                 status.value(), exception.getMessage(), request.getRequestURI()
         );
-
         return new ResponseEntity<>(errorResponse, status);
     }
 
