@@ -39,6 +39,13 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(exception, request);
     }
 
+    @ExceptionHandler(InvalidRequestException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidRequest(
+            @NotNull InvalidRequestException exception, HttpServletRequest request
+    ) {
+        return buildErrorResponse(exception, request);
+    }
+
     private ResponseEntity<ErrorResponse> buildErrorResponse(Exception exception, HttpServletRequest request) {
         HttpStatus status = extractHttpStatus(exception);
         ErrorResponse errorResponse = new ErrorResponse(
