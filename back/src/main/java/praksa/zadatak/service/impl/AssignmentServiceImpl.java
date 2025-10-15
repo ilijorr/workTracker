@@ -1,6 +1,7 @@
 package praksa.zadatak.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.AssignmentDTO;
@@ -27,6 +28,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     private final ProjectRepository projectRepository;
     private final EmployeeRepository employeeRepository;
 
+    @Transactional
     public AssignmentDTO create(CreateAssignmentRequestDTO request) {
         try {
             Long projectId = request.getProjectId();
@@ -44,6 +46,7 @@ public class AssignmentServiceImpl implements AssignmentService {
         }
     }
 
+    @Transactional
     public Boolean unassign(Long employeeId, Long projectId) {
         AssignmentId id = new AssignmentId(employeeId, projectId);
         try {

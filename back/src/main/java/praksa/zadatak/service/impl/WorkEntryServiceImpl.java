@@ -1,6 +1,7 @@
 package praksa.zadatak.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.CreateWorkEntryRequestDTO;
@@ -25,6 +26,7 @@ public class WorkEntryServiceImpl implements WorkEntryService {
 
     private final AssignmentRepository assignmentRepository;
 
+    @Transactional
     public WorkEntryDTO create(CreateWorkEntryRequestDTO request) {
         Long employeeId = request.getEmployeeId(); // will be read from auth later
         Long projectId = request.getProjectId();

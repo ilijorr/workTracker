@@ -1,5 +1,6 @@
 package praksa.zadatak.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.CreateProjectRequestDTO;
@@ -19,6 +20,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectMapper projectMapper;
     private final ProjectRepository projectRepository;
 
+    @Transactional
     public ProjectDTO create(CreateProjectRequestDTO request) {
         Project project = projectMapper.toEntity(request);
         project = projectRepository.save(project);

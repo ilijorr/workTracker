@@ -1,6 +1,7 @@
 package praksa.zadatak.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.CreateVacationRequestDTO;
@@ -25,6 +26,7 @@ public class VacationServiceImpl implements VacationService {
 
     private final EmployeeRepository employeeRepository;
 
+    @Transactional
     public VacationDTO create(CreateVacationRequestDTO request) {
         Date startDate = request.getStartDate();
         Date endDate = request.getEndDate();
@@ -45,6 +47,7 @@ public class VacationServiceImpl implements VacationService {
         }
     }
 
+    @Transactional
     public VacationDTO changeStatus(Long id, VacationStatus status) {
         try {
             Vacation vacation = vacationRepository.getReferenceById(id);
