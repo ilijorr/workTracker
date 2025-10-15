@@ -17,6 +17,7 @@ import praksa.zadatak.repository.VacationRepository;
 import praksa.zadatak.service.VacationService;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -60,5 +61,13 @@ public class VacationServiceImpl implements VacationService {
         } catch (EntityNotFoundException ex) {
             throw new ResourceNotFoundException("Vacation", "id", id);
         }
+    }
+
+    public List<VacationDTO> getAll() {
+        throw new UnsupportedOperationException("Method not implemented");
+    }
+
+    public List<VacationDTO> getFutureRequests() {
+        throw new UnsupportedOperationException("Method not implemented");
     }
 }

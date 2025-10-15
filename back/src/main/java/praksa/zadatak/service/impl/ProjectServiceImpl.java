@@ -40,4 +40,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     }
 
+    public List<ProjectDTO> getEmployeeProjects(Long employeeId) {
+        throw new UnsupportedOperationException("Method not implemented");
+    }
 }

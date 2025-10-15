@@ -18,6 +18,8 @@ import praksa.zadatak.repository.EmployeeRepository;
 import praksa.zadatak.repository.ProjectRepository;
 import praksa.zadatak.service.AssignmentService;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AssignmentServiceImpl implements AssignmentService {
@@ -57,4 +59,13 @@ public class AssignmentServiceImpl implements AssignmentService {
             throw new ResourceNotFoundException("Assignment", "id", id);
         }
     }
+
+    public List<AssignmentDTO> getAllActiveAssignmentsForProject(Long projectId) {
+        throw new UnsupportedOperationException("Method not implemented");
+    }
+
+    public List<AssignmentDTO> getAllActiveAssignmentsForEmployee(Long employeeId) {
+        throw new UnsupportedOperationException("Method not implemented");
+    }
+
 }
