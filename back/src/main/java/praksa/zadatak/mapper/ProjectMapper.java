@@ -6,10 +6,13 @@ import praksa.zadatak.dto.CreateProjectRequestDTO;
 import praksa.zadatak.dto.ProjectDTO;
 import praksa.zadatak.model.Project;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ProjectMapper {
 
     ProjectDTO toDTO(Project project);
+    List<ProjectDTO> toDTOs(List<Project> projects);
 
     Project toEntity(ProjectDTO projectDTO);
 
