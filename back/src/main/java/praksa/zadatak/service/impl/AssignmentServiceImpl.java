@@ -7,6 +7,7 @@ import praksa.zadatak.dto.CreateAssignmentRequestDTO;
 import praksa.zadatak.exception.ResourceNotFoundException;
 import praksa.zadatak.mapper.AssignmentMapper;
 import praksa.zadatak.model.Assignment;
+import praksa.zadatak.model.AssignmentId;
 import praksa.zadatak.model.Employee;
 import praksa.zadatak.model.Project;
 import praksa.zadatak.repository.AssignmentRepository;
@@ -31,9 +32,19 @@ public class AssignmentServiceImpl implements AssignmentService {
         Project project = projectRepository.getReferenceById(projectId);
         Employee employee = employeeRepository.getReferenceById(employeeId);
 
-        Assignment assignment = new Assignment(employee, project, request.getHourRate());
+        Assignment assignment = new Assignment(
+                employee, project, request.getHourRate(), true);
         assignment = assignmentRepository.save(assignment);
         return assignmentMapper.toDTO(assignment);
+    }
+
+    public Boolean unassign(Long employeeId, Long projectId) {
+        AssignmentId id = new AssignmentId(employeeId, projectId);
+        ensureAssignmentExists(id);
+        Assignment assignment = assignmentRepository.getReferenceById(id);
+        assignment.setIsActive(false);
+        assignmentRepository.save(assignment);
+        return Boolean.TRUE;
     }
 
     private void ensureProjectAndEmployeeExist(Long projectId, Long employeeId) {
@@ -43,6 +54,12 @@ public class AssignmentServiceImpl implements AssignmentService {
 
         if (!employeeRepository.existsById(employeeId)) {
             throw new ResourceNotFoundException("Employee", "id", employeeId);
+        }
+    }
+
+    private void ensureAssignmentExists(AssignmentId id) {
+        if (!assignmentRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Assignment", "id", id);
         }
     }
 }

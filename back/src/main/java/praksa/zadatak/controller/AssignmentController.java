@@ -2,10 +2,7 @@ package praksa.zadatak.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.AssignmentDTO;
 import praksa.zadatak.dto.CreateAssignmentRequestDTO;
 import praksa.zadatak.service.AssignmentService;
@@ -24,4 +21,13 @@ public class AssignmentController {
                 assignmentService.create(request)
         );
     }
+
+    @PatchMapping("/assignment/{employeeId}/{projectId}")
+    public ResponseEntity<Boolean> unassign(
+            @PathVariable Long employeeId,
+            @PathVariable Long projectId
+    ) {
+        return ResponseEntity.ok(assignmentService.unassign(employeeId, projectId));
+    }
+
 }

@@ -31,4 +31,7 @@ public class Assignment {
     @Column(nullable = false)
     @Positive
     private float hourRate;
+
+    @Column(nullable = false)
+    private Boolean isActive;
 }
