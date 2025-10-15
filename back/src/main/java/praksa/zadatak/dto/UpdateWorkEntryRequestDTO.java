@@ -1,5 +1,6 @@
 package praksa.zadatak.dto;
 
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class UpdateWorkEntryRequestDTO {
     @NotNull
     private YearMonth yearMonth;
     @Positive
+    @Max(720)
     @NotNull
     private Integer hourCount;
 }
