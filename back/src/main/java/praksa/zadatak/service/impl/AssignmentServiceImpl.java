@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.AssignmentDTO;
 import praksa.zadatak.dto.CreateAssignmentRequestDTO;
-import praksa.zadatak.exception.InvalidDateRangeException;
 import praksa.zadatak.exception.InvalidRequestException;
 import praksa.zadatak.exception.ResourceNotFoundException;
 import praksa.zadatak.mapper.AssignmentMapper;
@@ -29,7 +28,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     private final EmployeeRepository employeeRepository;
 
     @Transactional
-    public AssignmentDTO create(CreateAssignmentRequestDTO request) {
+    public AssignmentDTO assign(CreateAssignmentRequestDTO request) {
         try {
             Long projectId = request.getProjectId();
             Long employeeId = request.getEmployeeId();

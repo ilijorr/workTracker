@@ -18,7 +18,7 @@ public class AssignmentController {
             @RequestBody CreateAssignmentRequestDTO request
             ) {
         return ResponseEntity.ok(
-                assignmentService.create(request)
+                assignmentService.assign(request)
         );
     }
 
