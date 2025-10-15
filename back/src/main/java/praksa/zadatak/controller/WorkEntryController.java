@@ -20,6 +20,8 @@ public class WorkEntryController {
     public ResponseEntity<WorkEntryDTO> create(
             @RequestBody CreateWorkEntryRequestDTO request
             ) {
-        return null;
+        return ResponseEntity.ok(
+                workEntryService.create(request)
+        );
     }
 }
