@@ -33,7 +33,7 @@ public class WorkEntryServiceImpl implements WorkEntryService {
         YearMonth yearMonth = request.getYearMonth();
         Integer hourCount = request.getHourCount();
 
-        WorkEntry workEntry = new WorkEntry(assignment, yearMonth, hourCount);
+        WorkEntry workEntry = new WorkEntry(assignment, yearMonth.toString(), hourCount);
         workEntry = workEntryRepository.save(workEntry);
 
         return workEntryMapper.toDTO(workEntry);
