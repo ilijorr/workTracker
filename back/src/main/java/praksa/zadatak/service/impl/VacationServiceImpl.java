@@ -28,7 +28,7 @@ public class VacationServiceImpl implements VacationService {
     public VacationDTO create(CreateVacationRequestDTO request) {
         Date startDate = request.getStartDate();
         Date endDate = request.getEndDate();
-        if (!startBeforeEnd(startDate, endDate)) { throw new InvalidDateRangeException(); }
+        if (!startDate.before(endDate)) { throw new InvalidDateRangeException(); }
 
         Long employeeId = request.getEmployeeId();
         try {
@@ -57,17 +57,5 @@ public class VacationServiceImpl implements VacationService {
         } catch (EntityNotFoundException ex) {
             throw new ResourceNotFoundException("Vacation", "id", id);
         }
-    }
-
-    private boolean startBeforeEnd(Date start, Date end) {
-        return start.before(end);
-    }
-
-    private void ensureValidRequest(CreateVacationRequestDTO request) {
-
-        Long employeeId = request.getEmployeeId();
-        if (!employeeRepository.existsById(employeeId)) { throw new ResourceNotFoundException(
-                "Employee", "id", employeeId
-        ); }
     }
 }
