@@ -46,6 +46,14 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(exception, request);
     }
 
+    @ExceptionHandler(UnsupportedOperationException.class)
+    public ResponseEntity<ErrorResponse> handleUnimplementedMethod(
+            @NotNull UnsupportedOperationException exception,
+            HttpServletRequest request
+    ) {
+        return buildErrorResponse(exception, request);
+    }
+
     private ResponseEntity<ErrorResponse> buildErrorResponse(Exception exception, HttpServletRequest request) {
         HttpStatus status = extractHttpStatus(exception);
         ErrorResponse errorResponse = new ErrorResponse(
