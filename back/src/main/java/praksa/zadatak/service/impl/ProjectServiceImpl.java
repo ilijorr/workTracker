@@ -1,7 +1,6 @@
 package praksa.zadatak.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.CreateProjectRequestDTO;
 import praksa.zadatak.dto.ProjectDTO;
