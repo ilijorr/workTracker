@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleResourceNotFount(
+    public ResponseEntity<ErrorResponse> handleResourceNotFound(
             @NotNull ResourceNotFoundException exception, HttpServletRequest request
     ) {
         HttpStatus status = extractHttpStatus(exception);
