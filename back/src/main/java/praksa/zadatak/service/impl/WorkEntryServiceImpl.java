@@ -1,10 +1,12 @@
 package praksa.zadatak.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.CreateWorkEntryRequestDTO;
 import praksa.zadatak.dto.WorkEntryDTO;
 import praksa.zadatak.exception.NotAssignedException;
+import praksa.zadatak.exception.ResourceNotFoundException;
 import praksa.zadatak.mapper.WorkEntryMapper;
 import praksa.zadatak.model.Assignment;
 import praksa.zadatak.model.AssignmentId;
@@ -27,21 +29,18 @@ public class WorkEntryServiceImpl implements WorkEntryService {
         Long employeeId = request.getEmployeeId(); // will be read from auth later
         Long projectId = request.getProjectId();
         AssignmentId assignmentId = new AssignmentId(employeeId, projectId);
-        ensureAssignmentExists(assignmentId);
 
-        Assignment assignment = assignmentRepository.getReferenceById(assignmentId);
-        YearMonth yearMonth = request.getYearMonth();
-        Integer hourCount = request.getHourCount();
+        try {
+            Assignment assignment = assignmentRepository.getReferenceById(assignmentId);
+            YearMonth yearMonth = request.getYearMonth();
+            Integer hourCount = request.getHourCount();
 
-        WorkEntry workEntry = new WorkEntry(assignment, yearMonth.toString(), hourCount);
-        workEntry = workEntryRepository.save(workEntry);
+            WorkEntry workEntry = new WorkEntry(assignment, yearMonth.toString(), hourCount);
+            workEntry = workEntryRepository.save(workEntry);
 
-        return workEntryMapper.toDTO(workEntry);
-    }
-
-    private void ensureAssignmentExists(AssignmentId id) {
-        if (!assignmentRepository.existsById(id)) {
-            throw new NotAssignedException();
+            return workEntryMapper.toDTO(workEntry);
+        } catch (EntityNotFoundException) {
+            throw new ResourceNotFoundException("Assignment", "id", assignmentId);
         }
     }
 }
