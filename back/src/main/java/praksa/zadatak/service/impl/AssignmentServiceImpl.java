@@ -1,9 +1,12 @@
 package praksa.zadatak.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.AssignmentDTO;
 import praksa.zadatak.dto.CreateAssignmentRequestDTO;
+import praksa.zadatak.exception.InvalidDateRangeException;
+import praksa.zadatak.exception.InvalidRequestException;
 import praksa.zadatak.exception.ResourceNotFoundException;
 import praksa.zadatak.mapper.AssignmentMapper;
 import praksa.zadatak.model.Assignment;
@@ -25,26 +28,33 @@ public class AssignmentServiceImpl implements AssignmentService {
     private final EmployeeRepository employeeRepository;
 
     public AssignmentDTO create(CreateAssignmentRequestDTO request) {
-        Long projectId = request.getProjectId();
-        Long employeeId = request.getEmployeeId();
-        ensureProjectAndEmployeeExist(projectId, employeeId);
+        try {
+            Long projectId = request.getProjectId();
+            Long employeeId = request.getEmployeeId();
+            ensureProjectAndEmployeeExist(projectId, employeeId);
 
-        Project project = projectRepository.getReferenceById(projectId);
-        Employee employee = employeeRepository.getReferenceById(employeeId);
+            Project project = projectRepository.getReferenceById(projectId);
+            Employee employee = employeeRepository.getReferenceById(employeeId);
 
-        Assignment assignment = new Assignment(
-                employee, project, request.getHourRate(), true);
-        assignment = assignmentRepository.save(assignment);
-        return assignmentMapper.toDTO(assignment);
+            Assignment assignment = new Assignment(
+                    employee, project, request.getHourRate(), true);
+            assignment = assignmentRepository.save(assignment);
+            return assignmentMapper.toDTO(assignment);
+        } catch (EntityNotFoundException ex) {
+            throw new InvalidRequestException();
+        }
     }
 
     public Boolean unassign(Long employeeId, Long projectId) {
         AssignmentId id = new AssignmentId(employeeId, projectId);
-        ensureAssignmentExists(id);
-        Assignment assignment = assignmentRepository.getReferenceById(id);
-        assignment.setIsActive(false);
-        assignmentRepository.save(assignment);
-        return Boolean.TRUE;
+        try {
+            Assignment assignment = assignmentRepository.getReferenceById(id);
+            assignment.setIsActive(false);
+            assignmentRepository.save(assignment);
+            return Boolean.TRUE;
+        } catch (EntityNotFoundException ex) {
+            throw new ResourceNotFoundException("Assignment", "id", id);
+        }
     }
 
     private void ensureProjectAndEmployeeExist(Long projectId, Long employeeId) {
@@ -54,12 +64,6 @@ public class AssignmentServiceImpl implements AssignmentService {
 
         if (!employeeRepository.existsById(employeeId)) {
             throw new ResourceNotFoundException("Employee", "id", employeeId);
-        }
-    }
-
-    private void ensureAssignmentExists(AssignmentId id) {
-        if (!assignmentRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Assignment", "id", id);
         }
     }
 }

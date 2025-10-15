@@ -26,16 +26,23 @@ public class VacationServiceImpl implements VacationService {
     private final EmployeeRepository employeeRepository;
 
     public VacationDTO create(CreateVacationRequestDTO request) {
-        ensureValidRequest(request);
+        Date startDate = request.getStartDate();
+        Date endDate = request.getEndDate();
+        if (!startBeforeEnd(startDate, endDate)) { throw new InvalidDateRangeException(); }
 
-        Employee employee = employeeRepository.getReferenceById(request.getEmployeeId());
-        Vacation vacation = vacationMapper.toEntity(request);
-        vacation.setEmployee(employee);
-        vacation.setStatus(VacationStatus.PENDING);
+        Long employeeId = request.getEmployeeId();
+        try {
+            Employee employee = employeeRepository.getReferenceById(employeeId);
+            Vacation vacation = vacationMapper.toEntity(request);
+            vacation.setEmployee(employee);
+            vacation.setStatus(VacationStatus.PENDING);
 
-        vacation = vacationRepository.save(vacation);
+            vacation = vacationRepository.save(vacation);
 
-        return vacationMapper.toDTO(vacation);
+            return vacationMapper.toDTO(vacation);
+        } catch (EntityNotFoundException ex) {
+            throw new ResourceNotFoundException("Employee", "id", employeeId);
+        }
     }
 
     public VacationDTO changeStatus(Long id, VacationStatus status) {
@@ -52,10 +59,11 @@ public class VacationServiceImpl implements VacationService {
         }
     }
 
+    private boolean startBeforeEnd(Date start, Date end) {
+        return start.before(end);
+    }
+
     private void ensureValidRequest(CreateVacationRequestDTO request) {
-        Date startDate = request.getStartDate();
-        Date endDate = request.getEndDate();
-        if (startDate.after(endDate)) { throw new InvalidDateRangeException(); }
 
         Long employeeId = request.getEmployeeId();
         if (!employeeRepository.existsById(employeeId)) { throw new ResourceNotFoundException(
