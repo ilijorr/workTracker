@@ -2,11 +2,9 @@ package praksa.zadatak.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.CreateWorkEntryRequestDTO;
+import praksa.zadatak.dto.UpdateWorkEntryRequestDTO;
 import praksa.zadatak.dto.WorkEntryDTO;
 import praksa.zadatak.service.WorkEntryService;
 
@@ -22,6 +20,15 @@ public class WorkEntryController {
             ) {
         return ResponseEntity.ok(
                 workEntryService.create(request)
+        );
+    }
+
+    @PatchMapping
+    public ResponseEntity<WorkEntryDTO> update(
+            @RequestBody UpdateWorkEntryRequestDTO request
+            ) {
+        return ResponseEntity.ok(
+                workEntryService.update(request)
         );
     }
 }
