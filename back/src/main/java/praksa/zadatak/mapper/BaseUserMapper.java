@@ -8,7 +8,6 @@ import praksa.zadatak.model.BaseUser;
 @Mapper(componentModel = "spring")
 public interface BaseUserMapper {
 
-    @Mapping(target = "password", ignore = true)
     BaseUserDTO toDTO(BaseUser baseUser);
 
     BaseUser toEntity(BaseUserDTO baseUserDTO);

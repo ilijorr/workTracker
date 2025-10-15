@@ -8,7 +8,6 @@ import praksa.zadatak.model.Admin;
 @Mapper(componentModel = "spring")
 public interface AdminMapper {
 
-    @Mapping(target = "password", ignore = true)
     AdminDTO toDTO(Admin admin);
 
     Admin toEntity(AdminDTO adminDTO);
