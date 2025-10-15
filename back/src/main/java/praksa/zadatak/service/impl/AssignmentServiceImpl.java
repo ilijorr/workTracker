@@ -31,7 +31,6 @@ public class AssignmentServiceImpl implements AssignmentService {
         try {
             Long projectId = request.getProjectId();
             Long employeeId = request.getEmployeeId();
-            ensureProjectAndEmployeeExist(projectId, employeeId);
 
             Project project = projectRepository.getReferenceById(projectId);
             Employee employee = employeeRepository.getReferenceById(employeeId);
@@ -54,16 +53,6 @@ public class AssignmentServiceImpl implements AssignmentService {
             return Boolean.TRUE;
         } catch (EntityNotFoundException ex) {
             throw new ResourceNotFoundException("Assignment", "id", id);
-        }
-    }
-
-    private void ensureProjectAndEmployeeExist(Long projectId, Long employeeId) {
-        if (!projectRepository.existsById(projectId)) {
-            throw new ResourceNotFoundException("Project", "id", projectId);
-        }
-
-        if (!employeeRepository.existsById(employeeId)) {
-            throw new ResourceNotFoundException("Employee", "id", employeeId);
         }
     }
 }
