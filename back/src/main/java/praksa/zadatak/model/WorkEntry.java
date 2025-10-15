@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.YearMonth;
 
 @Data
 @AllArgsConstructor
@@ -21,7 +20,8 @@ public class WorkEntry {
 
     @Id
     @NotNull
-    private YearMonth yearMonth;
+    @Column(name = "year_month", columnDefinition = "VARCHAR(7)")
+    private String yearMonth;
 
     @Positive
     @NotNull

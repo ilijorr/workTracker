@@ -9,10 +9,13 @@ import praksa.zadatak.model.WorkEntry;
 @Mapper(componentModel = "spring", uses = {AssignmentMapper.class})
 public interface WorkEntryMapper {
 
+    @Mapping(target = "yearMonth", expression = "java(java.time.YearMonth.parse(workEntry.getYearMonth()))")
     WorkEntryDTO toDTO(WorkEntry workEntry);
 
+    @Mapping(target = "yearMonth", expression = "java(workEntryDTO.getYearMonth().toString())")
     WorkEntry toEntity(WorkEntryDTO workEntryDTO);
 
     @Mapping(target = "assignment", ignore = true)
+    @Mapping(target = "yearMonth", expression = "java(createWorkEntryRequestDTO.getYearMonth().toString())")
     WorkEntry toEntity(CreateWorkEntryRequestDTO createWorkEntryRequestDTO);
 }

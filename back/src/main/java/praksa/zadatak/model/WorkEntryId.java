@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.YearMonth;
 import java.util.Objects;
 
 @Data
@@ -13,7 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor
 public class WorkEntryId implements Serializable {
     private AssignmentId assignment;
-    private YearMonth yearMonth;
+    private String yearMonth;
 
     @Override
     public boolean equals(Object o) {
