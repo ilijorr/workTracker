@@ -8,4 +8,5 @@ import praksa.zadatak.model.Vacation;
 
 public interface VacationRepository extends JpaRepository<Vacation, Long> {
     Page<Vacation> findByStatus(VacationStatus status, Pageable pageable);
+    Page<Vacation> findByEmployeeId(Long employeeId, Pageable pageable);
 }

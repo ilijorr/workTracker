@@ -61,4 +61,16 @@ public class VacationController {
                 vacationService.getByStatus(VacationStatus.PENDING, page, size)
         );
     }
+
+    @GetMapping("/employee/{employeeId}")
+    public ResponseEntity<Page<VacationDTO>> getByEmployee(
+            @PathVariable Long employeeId,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "100") Integer size
+    ) {
+        return ResponseEntity.ok(
+                vacationService.getByEmployee(employeeId, page, size)
+        );
+    }
+
 }

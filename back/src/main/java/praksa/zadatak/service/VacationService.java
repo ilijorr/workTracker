@@ -12,4 +12,5 @@ public interface VacationService {
     Page<VacationDTO> getAll(Integer page, Integer size);
 
     Page<VacationDTO> getByStatus(VacationStatus status, Integer page, Integer size);
+    Page<VacationDTO> getByEmployee(Long employeeId, Integer page, Integer size);
 }

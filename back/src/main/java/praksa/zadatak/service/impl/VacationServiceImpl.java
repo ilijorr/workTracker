@@ -81,4 +81,12 @@ public class VacationServiceImpl implements VacationService {
         );
         return vacations.map(vacationMapper::toDTO);
     }
+
+    public Page<VacationDTO> getByEmployee(Long employeeId, Integer page, Integer size) {
+        Page<Vacation> vacations = vacationRepository.findByEmployeeId(
+                employeeId,
+                PageRequest.of(page, size, Sort.by("startDate").descending())
+        );
+        return vacations.map(vacationMapper::toDTO);
+    }
 }
