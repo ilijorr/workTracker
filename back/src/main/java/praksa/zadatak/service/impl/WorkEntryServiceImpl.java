@@ -12,8 +12,8 @@ import praksa.zadatak.mapper.WorkEntryMapper;
 import praksa.zadatak.model.AssignmentId;
 import praksa.zadatak.model.WorkEntry;
 import praksa.zadatak.model.WorkEntryId;
-import praksa.zadatak.repository.AssignmentRepository;
 import praksa.zadatak.repository.WorkEntryRepository;
+import praksa.zadatak.service.AssignmentService;
 import praksa.zadatak.service.WorkEntryService;
 
 import java.time.YearMonth;
@@ -25,7 +25,7 @@ public class WorkEntryServiceImpl implements WorkEntryService {
     private final WorkEntryRepository workEntryRepository;
     private final WorkEntryMapper workEntryMapper;
 
-    private final AssignmentRepository assignmentRepository;
+    private final AssignmentService assignmentService;
 
     @Transactional
     public WorkEntryDTO create(CreateWorkEntryRequestDTO request) {
@@ -35,7 +35,7 @@ public class WorkEntryServiceImpl implements WorkEntryService {
 
         try {
             WorkEntry workEntry = new WorkEntry(
-                    assignmentRepository.getReferenceById(assignmentId),
+                    assignmentService.getReference(assignmentId),
                     request.getYearMonth().toString(),
                     request.getHourCount()
             );

@@ -56,6 +56,15 @@ public class AssignmentServiceImpl implements AssignmentService {
         }
     }
 
+    public Assignment getReference(AssignmentId id) {
+        return assignmentRepository.getReferenceById(id);
+    }
+
+    public Assignment getReference(Long employeeId, Long projectId) {
+        AssignmentId id = new AssignmentId(employeeId, projectId);
+        return this.getReference(id);
+    }
+
     public List<AssignmentDTO> getAllActiveAssignmentsForProject(Long projectId) {
         throw new UnsupportedOperationException("Method not implemented");
     }
