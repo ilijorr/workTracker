@@ -11,8 +11,6 @@ import praksa.zadatak.exception.ResourceNotFoundException;
 import praksa.zadatak.mapper.AssignmentMapper;
 import praksa.zadatak.model.Assignment;
 import praksa.zadatak.model.AssignmentId;
-import praksa.zadatak.model.Employee;
-import praksa.zadatak.model.Project;
 import praksa.zadatak.repository.AssignmentRepository;
 import praksa.zadatak.repository.EmployeeRepository;
 import praksa.zadatak.repository.ProjectRepository;
@@ -32,14 +30,12 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Transactional
     public AssignmentDTO assign(CreateAssignmentRequestDTO request) {
         try {
-            Long projectId = request.getProjectId();
-            Long employeeId = request.getEmployeeId();
-
-            Project project = projectRepository.getReferenceById(projectId);
-            Employee employee = employeeRepository.getReferenceById(employeeId);
-
             Assignment assignment = new Assignment(
-                    employee, project, request.getHourRate(), true);
+                    employeeRepository.getReferenceById(request.getEmployeeId()),
+                    projectRepository.getReferenceById(request.getProjectId()),
+                    request.getHourRate(),
+                    true
+            );
             assignment = assignmentRepository.save(assignment);
             return assignmentMapper.toDTO(assignment);
         } catch (EntityNotFoundException ex) {

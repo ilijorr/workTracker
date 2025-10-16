@@ -9,7 +9,6 @@ import praksa.zadatak.dto.UpdateWorkEntryRequestDTO;
 import praksa.zadatak.dto.WorkEntryDTO;
 import praksa.zadatak.exception.ResourceNotFoundException;
 import praksa.zadatak.mapper.WorkEntryMapper;
-import praksa.zadatak.model.Assignment;
 import praksa.zadatak.model.AssignmentId;
 import praksa.zadatak.model.WorkEntry;
 import praksa.zadatak.model.WorkEntryId;
@@ -35,11 +34,11 @@ public class WorkEntryServiceImpl implements WorkEntryService {
         AssignmentId assignmentId = new AssignmentId(employeeId, projectId);
 
         try {
-            Assignment assignment = assignmentRepository.getReferenceById(assignmentId);
-            YearMonth yearMonth = request.getYearMonth();
-            Integer hourCount = request.getHourCount();
-
-            WorkEntry workEntry = new WorkEntry(assignment, yearMonth.toString(), hourCount);
+            WorkEntry workEntry = new WorkEntry(
+                    assignmentRepository.getReferenceById(assignmentId),
+                    request.getYearMonth().toString(),
+                    request.getHourCount()
+            );
             workEntry = workEntryRepository.save(workEntry);
 
             return workEntryMapper.toDTO(workEntry);
@@ -66,6 +65,8 @@ public class WorkEntryServiceImpl implements WorkEntryService {
             throw new ResourceNotFoundException("Work entry", "id", workEntryId);
         }
     }
+
+    // brisanje
 
     public List<WorkEntryDTO> getByMonthForEmployee(YearMonth yearMonth, Long employeeId) {
         throw new UnsupportedOperationException("Method not implemented");
