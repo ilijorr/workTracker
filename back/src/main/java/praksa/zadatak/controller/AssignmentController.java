@@ -48,4 +48,13 @@ public class AssignmentController {
         );
     }
 
+    @GetMapping("/project/{projectId}")
+    public ResponseEntity<List<AssignmentDTO>> getProjectAssignments(
+            @PathVariable Long projectId
+    ) {
+        return ResponseEntity.ok(
+                assignmentService.getAllActiveAssignmentsForProject(projectId)
+        );
+    }
+
 }

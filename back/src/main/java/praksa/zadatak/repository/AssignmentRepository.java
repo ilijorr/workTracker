@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface AssignmentRepository extends JpaRepository<Assignment, AssignmentId> {
     List<Assignment> findByEmployeeIdAndIsActiveTrue(Long employeeId);
+    List<Assignment> findByProjectIdAndIsActiveTrue(Long projectId);
 }

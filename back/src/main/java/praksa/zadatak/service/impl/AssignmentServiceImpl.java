@@ -66,7 +66,8 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     public List<AssignmentDTO> getAllActiveAssignmentsForProject(Long projectId) {
-        throw new UnsupportedOperationException("Method not implemented");
+        List<Assignment> assignments = assignmentRepository.findByProjectIdAndIsActiveTrue(projectId);
+        return assignmentMapper.toDTOs(assignments);
     }
 
     public List<AssignmentDTO> getAllActiveAssignmentsForEmployee(Long employeeId) {
