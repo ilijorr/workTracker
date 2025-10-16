@@ -70,7 +70,8 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     public List<AssignmentDTO> getAllActiveAssignmentsForEmployee(Long employeeId) {
-        throw new UnsupportedOperationException("Method not implemented");
+        List<Assignment> assignments = assignmentRepository.findByEmployeeIdAndIsActiveTrue(employeeId);
+        return assignmentMapper.toDTOs(assignments);
     }
 
 }

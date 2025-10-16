@@ -6,10 +6,13 @@ import praksa.zadatak.dto.AssignmentDTO;
 import praksa.zadatak.dto.CreateAssignmentRequestDTO;
 import praksa.zadatak.model.Assignment;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", uses = {EmployeeMapper.class, ProjectMapper.class})
 public interface AssignmentMapper {
 
     AssignmentDTO toDTO(Assignment assignment);
+    List<AssignmentDTO> toDTOs(List<Assignment> assignment);
 
     Assignment toEntity(AssignmentDTO assignmentDTO);
 
