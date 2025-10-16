@@ -22,7 +22,7 @@ public class AssignmentController {
         );
     }
 
-    @PatchMapping("/assignment/{employeeId}/{projectId}")
+    @PatchMapping("/{employeeId}/{projectId}")
     public ResponseEntity<Boolean> unassign(
             @PathVariable Long employeeId,
             @PathVariable Long projectId
