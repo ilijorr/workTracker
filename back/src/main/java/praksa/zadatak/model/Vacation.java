@@ -13,6 +13,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(indexes = {
+        @Index(name = "idx_vacation_status", columnList = "status")
+})
 public class Vacation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +26,7 @@ public class Vacation {
     private Employee employee;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private VacationStatus status;
 
     @NotNull
