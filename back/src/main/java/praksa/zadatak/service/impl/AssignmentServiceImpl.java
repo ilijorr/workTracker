@@ -66,13 +66,15 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     public List<AssignmentDTO> getAllActiveAssignmentsForProject(Long projectId) {
-        List<Assignment> assignments = assignmentRepository.findByProjectIdAndIsActiveTrue(projectId);
-        return assignmentMapper.toDTOs(assignments);
+        return assignmentMapper.toDTOs(
+                assignmentRepository.findByProjectIdAndIsActiveTrue(projectId)
+        );
     }
 
     public List<AssignmentDTO> getAllActiveAssignmentsForEmployee(Long employeeId) {
-        List<Assignment> assignments = assignmentRepository.findByEmployeeIdAndIsActiveTrue(employeeId);
-        return assignmentMapper.toDTOs(assignments);
+        return assignmentMapper.toDTOs(
+                assignmentRepository.findByEmployeeIdAndIsActiveTrue(employeeId)
+        );
     }
 
 }
