@@ -3,6 +3,10 @@ package praksa.zadatak.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.CreateVacationRequestDTO;
 import praksa.zadatak.dto.VacationDTO;
@@ -62,12 +66,24 @@ public class VacationServiceImpl implements VacationService {
             throw new ResourceNotFoundException("Vacation", "id", id);
         }
     }
-
-    public List<VacationDTO> getAll() {
-        throw new UnsupportedOperationException("Method not implemented");
+    /*
+    public Page<VacationDTO> getAll(Integer page, Integer size) {
+        Page<Vacation> vacations = vacationRepository.findAll(
+                PageRequest.of(page, size, Sort.by("startDate").descending())
+        );
+        return vacations.map(vacationMapper::toDTO);
     }
 
     public List<VacationDTO> getFutureRequests() {
         throw new UnsupportedOperationException("Method not implemented");
+    }
+    */
+
+    public Page<VacationDTO> getByStatus(VacationStatus status, Integer page, Integer size) {
+        Page<Vacation> vacations = vacationRepository.findByStatus(
+                status,
+                PageRequest.of(page, size, Sort.by("startDate").descending())
+        );
+        return vacations.map(vacationMapper::toDTO);
     }
 }

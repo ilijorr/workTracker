@@ -1,6 +1,7 @@
 package praksa.zadatak.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.CreateVacationRequestDTO;
@@ -38,6 +39,16 @@ public class VacationController {
     ) {
         return ResponseEntity.ok(
                 vacationService.changeStatus(id, VacationStatus.DECLINED)
+        );
+    }
+
+    @GetMapping("/pending")
+    public ResponseEntity<Page<VacationDTO>> getPending(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "100") Integer size
+    ) {
+        return ResponseEntity.ok(
+                vacationService.getByStatus(VacationStatus.PENDING, page, size)
         );
     }
 }
