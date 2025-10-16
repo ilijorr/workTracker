@@ -12,8 +12,8 @@ import praksa.zadatak.exception.ResourceNotFoundException;
 import praksa.zadatak.mapper.VacationMapper;
 import praksa.zadatak.model.Employee;
 import praksa.zadatak.model.Vacation;
-import praksa.zadatak.repository.EmployeeRepository;
 import praksa.zadatak.repository.VacationRepository;
+import praksa.zadatak.service.EmployeeService;
 import praksa.zadatak.service.VacationService;
 
 import java.util.Date;
@@ -25,7 +25,7 @@ public class VacationServiceImpl implements VacationService {
     private final VacationRepository vacationRepository;
     private final VacationMapper vacationMapper;
 
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeService employeeService;
 
     @Transactional
     public VacationDTO create(CreateVacationRequestDTO request) {
@@ -35,7 +35,7 @@ public class VacationServiceImpl implements VacationService {
 
         Long employeeId = request.getEmployeeId();
         try {
-            Employee employee = employeeRepository.getReferenceById(employeeId);
+            Employee employee = employeeService.getReference(request.getEmployeeId());
             Vacation vacation = vacationMapper.toEntity(request);
             vacation.setEmployee(employee);
             vacation.setStatus(VacationStatus.PENDING);

@@ -15,6 +15,7 @@ import praksa.zadatak.repository.AssignmentRepository;
 import praksa.zadatak.repository.EmployeeRepository;
 import praksa.zadatak.repository.ProjectRepository;
 import praksa.zadatak.service.AssignmentService;
+import praksa.zadatak.service.EmployeeService;
 
 import java.util.List;
 
@@ -25,13 +26,13 @@ public class AssignmentServiceImpl implements AssignmentService {
     private final AssignmentMapper assignmentMapper;
 
     private final ProjectRepository projectRepository;
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeService employeeService;
 
     @Transactional
     public AssignmentDTO assign(CreateAssignmentRequestDTO request) {
         try {
             Assignment assignment = new Assignment(
-                    employeeRepository.getReferenceById(request.getEmployeeId()),
+                    employeeService.getReference(request.getEmployeeId()),
                     projectRepository.getReferenceById(request.getProjectId()),
                     request.getHourRate(),
                     true
