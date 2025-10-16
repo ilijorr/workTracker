@@ -66,18 +66,13 @@ public class VacationServiceImpl implements VacationService {
             throw new ResourceNotFoundException("Vacation", "id", id);
         }
     }
-    /*
+
     public Page<VacationDTO> getAll(Integer page, Integer size) {
         Page<Vacation> vacations = vacationRepository.findAll(
                 PageRequest.of(page, size, Sort.by("startDate").descending())
         );
         return vacations.map(vacationMapper::toDTO);
     }
-
-    public List<VacationDTO> getFutureRequests() {
-        throw new UnsupportedOperationException("Method not implemented");
-    }
-    */
 
     public Page<VacationDTO> getByStatus(VacationStatus status, Integer page, Integer size) {
         Page<Vacation> vacations = vacationRepository.findByStatus(

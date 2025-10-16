@@ -42,6 +42,16 @@ public class VacationController {
         );
     }
 
+    @GetMapping
+    public ResponseEntity<Page<VacationDTO>> getAll(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "100") Integer size
+    ) {
+        return ResponseEntity.ok(
+                vacationService.getAll(page, size)
+        );
+    }
+
     @GetMapping("/pending")
     public ResponseEntity<Page<VacationDTO>> getPending(
             @RequestParam(defaultValue = "0") Integer page,
