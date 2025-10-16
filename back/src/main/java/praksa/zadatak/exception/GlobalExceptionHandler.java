@@ -16,6 +16,7 @@ public class GlobalExceptionHandler {
             InvalidRequestException.class,
             ResourceNotFoundException.class,
             UnsupportedOperationException.class,
+            UsernameTakenException.class,
             Exception.class,
     })
     public ResponseEntity<ErrorResponse> handleException(

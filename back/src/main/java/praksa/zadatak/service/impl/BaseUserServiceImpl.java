@@ -20,4 +20,8 @@ public class BaseUserServiceImpl implements BaseUserService {
     public Optional<BaseUser> get(String username) {
         return userRepository.findByUsername(username);
     }
+
+    public Boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
 }

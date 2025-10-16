@@ -2,12 +2,15 @@ package praksa.zadatak.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.CreateEmployeeRequestDTO;
 import praksa.zadatak.dto.EmployeeDTO;
+import praksa.zadatak.exception.UsernameTakenException;
 import praksa.zadatak.mapper.EmployeeMapper;
 import praksa.zadatak.model.Employee;
 import praksa.zadatak.repository.EmployeeRepository;
+import praksa.zadatak.service.BaseUserService;
 import praksa.zadatak.service.EmployeeService;
 
 @Service
@@ -16,8 +19,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeMapper employeeMapper;
     private final EmployeeRepository employeeRepository;
 
+    private final BaseUserService userService;
+    private final PasswordEncoder passwordEncoder;
+
     @Transactional
     public EmployeeDTO create(CreateEmployeeRequestDTO request) {
+        if (userService.existsByUsername(request.getUsername())) {
+            throw new UsernameTakenException(request.getUsername());
+        }
+
+        String hashedPassword = passwordEncoder.encode(request.getPassword());
+        request.setPassword(hashedPassword);
+
         Employee employee = employeeMapper.toEntity(request);
         employee = employeeRepository.save(employee);
         return employeeMapper.toDTO(employee);
