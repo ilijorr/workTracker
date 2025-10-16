@@ -13,5 +13,4 @@ public interface ProjectService {
     ProjectDTO get(Long id);
     Project getReference(Long id);
 
-    List<ProjectDTO> getEmployeeProjects(Long employeeId);
 }
