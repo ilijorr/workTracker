@@ -66,7 +66,13 @@ public class WorkEntryServiceImpl implements WorkEntryService {
         }
     }
 
-    // brisanje
+    @Transactional
+    public void delete(Long employeeId, Long projectId, YearMonth yearMonth) {
+        workEntryRepository.deleteById(new WorkEntryId(
+                new AssignmentId(employeeId, projectId),
+                yearMonth.toString()
+        ));
+    }
 
     public List<WorkEntryDTO> getByMonthForEmployee(YearMonth yearMonth, Long employeeId) {
         throw new UnsupportedOperationException("Method not implemented");
