@@ -6,11 +6,15 @@ import praksa.zadatak.dto.CreateWorkEntryRequestDTO;
 import praksa.zadatak.dto.WorkEntryDTO;
 import praksa.zadatak.model.WorkEntry;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", uses = {AssignmentMapper.class})
 public interface WorkEntryMapper {
 
     @Mapping(target = "yearMonth", expression = "java(java.time.YearMonth.parse(workEntry.getYearMonth()))")
     WorkEntryDTO toDTO(WorkEntry workEntry);
+
+    List<WorkEntryDTO> toDTOs(List<WorkEntry> workEntries);
 
     @Mapping(target = "yearMonth", expression = "java(workEntryDTO.getYearMonth().toString())")
     WorkEntry toEntity(WorkEntryDTO workEntryDTO);

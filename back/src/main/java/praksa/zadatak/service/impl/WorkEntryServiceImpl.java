@@ -75,10 +75,17 @@ public class WorkEntryServiceImpl implements WorkEntryService {
     }
 
     public List<WorkEntryDTO> getByMonthForEmployee(YearMonth yearMonth, Long employeeId) {
-        throw new UnsupportedOperationException("Method not implemented");
+        return workEntryMapper.toDTOs(
+                workEntryRepository.findByAssignment_EmployeeIdAndYearMonth(
+                        employeeId, yearMonth.toString())
+        );
     }
 
     public List<WorkEntryDTO> getByMonthForProject(YearMonth yearMonth, Long projectId) {
-        throw new UnsupportedOperationException("Method not implemented");
+        return workEntryMapper.toDTOs(
+                workEntryRepository.findByAssignment_ProjectIdAndYearMonth(
+                        projectId, yearMonth.toString()
+                )
+        );
     }
 }

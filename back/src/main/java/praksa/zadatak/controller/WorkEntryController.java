@@ -10,6 +10,7 @@ import praksa.zadatak.dto.WorkEntryDTO;
 import praksa.zadatak.service.WorkEntryService;
 
 import java.time.YearMonth;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -44,4 +45,25 @@ public class WorkEntryController {
         workEntryService.delete(employeeId, projectId, yearMonth);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/year-month/{yearMonth}/employee/{employeeId}")
+    public ResponseEntity<List<WorkEntryDTO>> getByMonthForEmployee(
+            @PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth,
+            @PathVariable Long employeeId
+    ) {
+        return ResponseEntity.ok(
+                workEntryService.getByMonthForEmployee(yearMonth, employeeId)
+        );
+    }
+
+    @GetMapping("/year-month/{yearMonth}/project/{projectId}")
+    public ResponseEntity<List<WorkEntryDTO>> getByMonthForProject(
+            @PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth,
+            @PathVariable Long projectId
+    ) {
+        return ResponseEntity.ok(
+                workEntryService.getByMonthForProject(yearMonth, projectId)
+        );
+    }
+
 }
