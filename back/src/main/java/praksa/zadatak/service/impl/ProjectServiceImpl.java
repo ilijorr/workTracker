@@ -43,7 +43,4 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.getReferenceById(id);
     }
 
-    public List<ProjectDTO> getEmployeeProjects(Long employeeId) {
-        throw new UnsupportedOperationException("Method not implemented");
-    }
 }
