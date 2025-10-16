@@ -12,10 +12,9 @@ import praksa.zadatak.mapper.AssignmentMapper;
 import praksa.zadatak.model.Assignment;
 import praksa.zadatak.model.AssignmentId;
 import praksa.zadatak.repository.AssignmentRepository;
-import praksa.zadatak.repository.EmployeeRepository;
-import praksa.zadatak.repository.ProjectRepository;
 import praksa.zadatak.service.AssignmentService;
 import praksa.zadatak.service.EmployeeService;
+import praksa.zadatak.service.ProjectService;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     private final AssignmentRepository assignmentRepository;
     private final AssignmentMapper assignmentMapper;
 
-    private final ProjectRepository projectRepository;
+    private final ProjectService projectService;
     private final EmployeeService employeeService;
 
     @Transactional
@@ -33,7 +32,7 @@ public class AssignmentServiceImpl implements AssignmentService {
         try {
             Assignment assignment = new Assignment(
                     employeeService.getReference(request.getEmployeeId()),
-                    projectRepository.getReferenceById(request.getProjectId()),
+                    projectService.getReference(request.getProjectId()),
                     request.getHourRate(),
                     true
             );

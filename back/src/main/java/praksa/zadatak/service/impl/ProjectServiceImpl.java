@@ -37,7 +37,10 @@ public class ProjectServiceImpl implements ProjectService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Project", "id", id));
         return projectMapper.toDTO(project);
+    }
 
+    public Project getReference(Long id) {
+        return projectRepository.getReferenceById(id);
     }
 
     public List<ProjectDTO> getEmployeeProjects(Long employeeId) {
