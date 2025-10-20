@@ -1,6 +1,7 @@
 package praksa.zadatak.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import praksa.zadatak.enums.UserRole;
 
@@ -27,7 +28,7 @@ public class BaseUser {
     @Column(nullable = false)
     private String password;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
 }
