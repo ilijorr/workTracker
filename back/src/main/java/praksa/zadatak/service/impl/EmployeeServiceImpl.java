@@ -14,6 +14,8 @@ import praksa.zadatak.repository.EmployeeRepository;
 import praksa.zadatak.service.BaseUserService;
 import praksa.zadatak.service.EmployeeService;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
@@ -40,5 +42,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public Employee getReference(Long id) {
         return employeeRepository.getReferenceById(id);
+    }
+
+    public Optional<Employee> get(Long id) {
+        return employeeRepository.findById(id);
     }
 }
