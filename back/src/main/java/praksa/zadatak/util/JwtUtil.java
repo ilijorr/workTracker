@@ -1,22 +1,23 @@
 package praksa.zadatak.util;
 
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.WeakKeyException;
 import lombok.Getter;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
 import praksa.zadatak.config.JwtConfig;
 import io.jsonwebtoken.security.Keys;
+import praksa.zadatak.exception.InvalidRequestException;
 import praksa.zadatak.model.BaseUser;
 
+import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
-import java.security.Key;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class JwtUtil {
-    private final Key key;
+    private final SecretKey key;
 
     @Getter
     private final Long expiration;
@@ -40,6 +41,20 @@ public class JwtUtil {
                 .claim("role", user.getRole())
                 .signWith(this.key)
                 .compact();
+    }
+
+    public Claims extractClaimsAndValidateToken(String token) {
+        try {
+            return Jwts.parser()
+                    .verifyWith(key)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+        } catch (IllegalArgumentException e) {
+            throw new AuthenticationCredentialsNotFoundException("Can't validate empty JWT");
+        } catch (JwtException e) {
+            throw new BadCredentialsException("Invalid or expired token");
+        }
     }
 
     private Date generateExpirationDate() {
