@@ -2,6 +2,7 @@ package praksa.zadatak.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.LoginRequestDTO;
 import praksa.zadatak.dto.LoginResponseDTO;
@@ -17,10 +18,11 @@ public class AuthServiceImpl implements AuthService {
     private final BaseUserService userService;
     private final JwtUtil jwtUtil;
 
+    private final PasswordEncoder passwordEncoder;
+
     public LoginResponseDTO login(LoginRequestDTO request) {
-        BaseUser user = userService.get(request.getUsername())
-                .orElseThrow(() -> new BadCredentialsException("Username or password are invalid"));
-        if (!user.getPassword().equals(request.getPassword())) {
+        BaseUser user = userService.get(request.getUsername());
+        if (user == null || !passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new BadCredentialsException("Username or password are invalid");
         }
 

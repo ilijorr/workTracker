@@ -17,7 +17,7 @@ public class BaseUserServiceImpl implements BaseUserService {
         return null;
     }
 
-    public Optional<BaseUser> get(String username) {
+    public BaseUser get(String username) {
         return userRepository.findByUsername(username);
     }
 
