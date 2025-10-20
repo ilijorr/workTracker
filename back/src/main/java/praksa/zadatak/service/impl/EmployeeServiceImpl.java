@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.CreateEmployeeRequestDTO;
 import praksa.zadatak.dto.EmployeeDTO;
+import praksa.zadatak.enums.UserRole;
 import praksa.zadatak.exception.UsernameTakenException;
 import praksa.zadatak.mapper.EmployeeMapper;
 import praksa.zadatak.model.Employee;
@@ -32,6 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         request.setPassword(hashedPassword);
 
         Employee employee = employeeMapper.toEntity(request);
+        employee.setRole(UserRole.ROLE_EMPLOYEE);
         employee = employeeRepository.save(employee);
         return employeeMapper.toDTO(employee);
     }
