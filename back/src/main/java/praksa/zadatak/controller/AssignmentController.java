@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.AssignmentDTO;
 import praksa.zadatak.dto.request.CreateAssignmentRequestDTO;
+import praksa.zadatak.dto.response.EmployeeAssignmentsResponseDTO;
 import praksa.zadatak.service.AssignmentService;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class AssignmentController {
         }
     **/
     @GetMapping("/employee/{employeeId}")
-    public ResponseEntity<List<AssignmentDTO>> getEmployeeAssignments(
+    public ResponseEntity<EmployeeAssignmentsResponseDTO> getEmployeeAssignments(
             @PathVariable Long employeeId
     ) {
         return ResponseEntity.ok(

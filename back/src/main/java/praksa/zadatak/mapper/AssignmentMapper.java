@@ -3,6 +3,7 @@ package praksa.zadatak.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import praksa.zadatak.dto.AssignmentDTO;
+import praksa.zadatak.dto.AssignmentWithoutEmployeeDTO;
 import praksa.zadatak.dto.request.CreateAssignmentRequestDTO;
 import praksa.zadatak.model.Assignment;
 
@@ -19,4 +20,9 @@ public interface AssignmentMapper {
     @Mapping(target = "employee", ignore = true)
     @Mapping(target = "project", ignore = true)
     Assignment toEntity(CreateAssignmentRequestDTO createAssignmentRequestDTO);
+
+    @Mapping(source = "project", target = "projectDTO")
+    AssignmentWithoutEmployeeDTO toAssignmentWithoutEmployeeDTO(Assignment assignment);
+
+    List<AssignmentWithoutEmployeeDTO> toAssignmentWithoutEmployeeDTOs(List<Assignment> assignments);
 }

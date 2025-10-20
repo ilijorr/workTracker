@@ -2,6 +2,7 @@ package praksa.zadatak.service;
 
 import praksa.zadatak.dto.AssignmentDTO;
 import praksa.zadatak.dto.request.CreateAssignmentRequestDTO;
+import praksa.zadatak.dto.response.EmployeeAssignmentsResponseDTO;
 import praksa.zadatak.model.Assignment;
 import praksa.zadatak.model.AssignmentId;
 
@@ -15,5 +16,5 @@ public interface AssignmentService {
     Assignment getReference(Long employeeId, Long projectId);
 
     List<AssignmentDTO> getAllActiveAssignmentsForProject(Long projectId);
-    List<AssignmentDTO> getAllActiveAssignmentsForEmployee(Long employeeId);
+    EmployeeAssignmentsResponseDTO getAllActiveAssignmentsForEmployee(Long employeeId);
 }
