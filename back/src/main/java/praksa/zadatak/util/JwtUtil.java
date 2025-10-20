@@ -58,6 +58,6 @@ public class JwtUtil {
     }
 
     private Date generateExpirationDate() {
-        return new Date(System.currentTimeMillis() + this.expiration);
+        return new Date(System.currentTimeMillis() + this.expiration * 1000);
     }
 }
