@@ -2,7 +2,7 @@ package praksa.zadatak.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import praksa.zadatak.dto.CreateWorkEntryRequestDTO;
+import praksa.zadatak.dto.request.CreateWorkEntryRequestDTO;
 import praksa.zadatak.dto.WorkEntryDTO;
 import praksa.zadatak.model.WorkEntry;
 

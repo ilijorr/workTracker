@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import praksa.zadatak.dto.CreateVacationRequestDTO;
+import praksa.zadatak.dto.request.CreateVacationRequestDTO;
 import praksa.zadatak.dto.VacationDTO;
 import praksa.zadatak.enums.VacationStatus;
 import praksa.zadatak.service.VacationService;

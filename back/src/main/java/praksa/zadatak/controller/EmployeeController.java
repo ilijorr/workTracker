@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import praksa.zadatak.dto.CreateEmployeeRequestDTO;
+import praksa.zadatak.dto.request.CreateEmployeeRequestDTO;
 import praksa.zadatak.dto.EmployeeDTO;
 import praksa.zadatak.service.EmployeeService;
 

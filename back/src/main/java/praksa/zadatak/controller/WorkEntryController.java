@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import praksa.zadatak.dto.CreateWorkEntryRequestDTO;
-import praksa.zadatak.dto.UpdateWorkEntryRequestDTO;
+import praksa.zadatak.dto.request.CreateWorkEntryRequestDTO;
+import praksa.zadatak.dto.request.UpdateWorkEntryRequestDTO;
 import praksa.zadatak.dto.WorkEntryDTO;
 import praksa.zadatak.service.WorkEntryService;
 

@@ -1,4 +1,4 @@
-package praksa.zadatak.dto;
+package praksa.zadatak.dto.request;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;

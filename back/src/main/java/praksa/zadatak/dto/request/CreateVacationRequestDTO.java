@@ -1,21 +1,25 @@
-package praksa.zadatak.dto;
+package praksa.zadatak.dto.request;
 
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateAssignmentRequestDTO {
+public class CreateVacationRequestDTO {
     @NotNull
     private Long employeeId;
 
     @NotNull
-    private Long projectId;
+    @Future
+    private Date startDate;
 
-    @Positive
-    private float hourRate;
+    @NotNull
+    @Future
+    private Date endDate;
 }

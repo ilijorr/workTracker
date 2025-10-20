@@ -3,7 +3,7 @@ package praksa.zadatak.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import praksa.zadatak.dto.AssignmentDTO;
-import praksa.zadatak.dto.CreateAssignmentRequestDTO;
+import praksa.zadatak.dto.request.CreateAssignmentRequestDTO;
 import praksa.zadatak.model.Assignment;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package praksa.zadatak.service;
 
-import praksa.zadatak.dto.CreateWorkEntryRequestDTO;
-import praksa.zadatak.dto.UpdateWorkEntryRequestDTO;
+import praksa.zadatak.dto.request.CreateWorkEntryRequestDTO;
+import praksa.zadatak.dto.request.UpdateWorkEntryRequestDTO;
 import praksa.zadatak.dto.WorkEntryDTO;
 
 import java.time.YearMonth;

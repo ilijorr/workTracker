@@ -5,10 +5,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import praksa.zadatak.dto.CreateVacationRequestDTO;
+import praksa.zadatak.dto.request.CreateVacationRequestDTO;
 import praksa.zadatak.dto.VacationDTO;
 import praksa.zadatak.enums.VacationStatus;
 import praksa.zadatak.exception.InvalidDateRangeException;
@@ -21,7 +20,6 @@ import praksa.zadatak.service.EmployeeService;
 import praksa.zadatak.service.VacationService;
 
 import java.util.Date;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

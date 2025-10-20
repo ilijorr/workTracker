@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.AssignmentDTO;
-import praksa.zadatak.dto.CreateAssignmentRequestDTO;
+import praksa.zadatak.dto.request.CreateAssignmentRequestDTO;
 import praksa.zadatak.service.AssignmentService;
 
 import java.util.List;

@@ -5,7 +5,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.AssignmentDTO;
-import praksa.zadatak.dto.CreateAssignmentRequestDTO;
+import praksa.zadatak.dto.request.CreateAssignmentRequestDTO;
 import praksa.zadatak.exception.InvalidRequestException;
 import praksa.zadatak.exception.ResourceNotFoundException;
 import praksa.zadatak.mapper.AssignmentMapper;

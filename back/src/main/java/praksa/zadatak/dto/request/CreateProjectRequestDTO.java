@@ -1,4 +1,4 @@
-package praksa.zadatak.dto;
+package praksa.zadatak.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -9,12 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateEmployeeRequestDTO {
+public class CreateProjectRequestDTO {
     @NotBlank
-    @Size(min = 3, max = 50)
-    private String username;
+    @Size(max = 100)
+    private String name;
 
-    @NotBlank
-    @Size(min = 8)
-    private String password;
+    @Size(max = 500)
+    private String description;
 }

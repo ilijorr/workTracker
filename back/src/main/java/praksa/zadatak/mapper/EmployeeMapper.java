@@ -1,8 +1,7 @@
 package praksa.zadatak.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import praksa.zadatak.dto.CreateEmployeeRequestDTO;
+import praksa.zadatak.dto.request.CreateEmployeeRequestDTO;
 import praksa.zadatak.dto.EmployeeDTO;
 import praksa.zadatak.model.Employee;
 

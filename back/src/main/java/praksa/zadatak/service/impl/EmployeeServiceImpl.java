@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import praksa.zadatak.dto.CreateEmployeeRequestDTO;
+import praksa.zadatak.dto.request.CreateEmployeeRequestDTO;
 import praksa.zadatak.dto.EmployeeDTO;
 import praksa.zadatak.enums.UserRole;
 import praksa.zadatak.exception.UsernameTakenException;

@@ -2,7 +2,7 @@ package praksa.zadatak.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import praksa.zadatak.dto.CreateProjectRequestDTO;
+import praksa.zadatak.dto.request.CreateProjectRequestDTO;
 import praksa.zadatak.dto.ProjectDTO;
 import praksa.zadatak.model.Project;
 

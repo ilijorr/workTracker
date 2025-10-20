@@ -2,7 +2,7 @@ package praksa.zadatak.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import praksa.zadatak.dto.CreateVacationRequestDTO;
+import praksa.zadatak.dto.request.CreateVacationRequestDTO;
 import praksa.zadatak.dto.VacationDTO;
 import praksa.zadatak.model.Vacation;
 

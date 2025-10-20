@@ -3,7 +3,7 @@ package praksa.zadatak.service.impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import praksa.zadatak.dto.CreateProjectRequestDTO;
+import praksa.zadatak.dto.request.CreateProjectRequestDTO;
 import praksa.zadatak.dto.ProjectDTO;
 import praksa.zadatak.exception.ResourceNotFoundException;
 import praksa.zadatak.mapper.ProjectMapper;

@@ -1,7 +1,7 @@
 package praksa.zadatak.service;
 
 import praksa.zadatak.dto.AssignmentDTO;
-import praksa.zadatak.dto.CreateAssignmentRequestDTO;
+import praksa.zadatak.dto.request.CreateAssignmentRequestDTO;
 import praksa.zadatak.model.Assignment;
 import praksa.zadatak.model.AssignmentId;
 
