@@ -7,13 +7,16 @@ import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.AssignmentDTO;
 import praksa.zadatak.dto.request.CreateAssignmentRequestDTO;
 import praksa.zadatak.dto.response.EmployeeAssignmentsResponseDTO;
+import praksa.zadatak.dto.response.ProjectAssignmentsResponseDTO;
 import praksa.zadatak.exception.InvalidRequestException;
 import praksa.zadatak.exception.ResourceNotFoundException;
 import praksa.zadatak.mapper.AssignmentMapper;
 import praksa.zadatak.mapper.EmployeeMapper;
+import praksa.zadatak.mapper.ProjectMapper;
 import praksa.zadatak.model.Assignment;
 import praksa.zadatak.model.AssignmentId;
 import praksa.zadatak.model.Employee;
+import praksa.zadatak.model.Project;
 import praksa.zadatak.repository.AssignmentRepository;
 import praksa.zadatak.service.AssignmentService;
 import praksa.zadatak.service.EmployeeService;
@@ -28,6 +31,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     private final AssignmentMapper assignmentMapper;
 
     private final ProjectService projectService;
+    private final ProjectMapper projectMapper;
     private final EmployeeMapper employeeMapper;
     private final EmployeeService employeeService;
 
@@ -69,10 +73,14 @@ public class AssignmentServiceImpl implements AssignmentService {
         return this.getReference(id);
     }
 
-    public List<AssignmentDTO> getAllActiveAssignmentsForProject(Long projectId) {
-        return assignmentMapper.toDTOs(
-                assignmentRepository.findByProjectIdAndIsActiveTrue(projectId)
-        );
+    public ProjectAssignmentsResponseDTO getAllActiveAssignmentsForProject(Long projectId) {
+        List<Assignment> assignments = assignmentRepository.findByProjectIdAndIsActiveTrue(projectId);
+        if (assignments == null || assignments.isEmpty()) { return null; }
+        Project project = projectService.getReference(projectId);
+        return ProjectAssignmentsResponseDTO.builder()
+                .projectDTO(projectMapper.toDTO(project))
+                .assignmentDTOs(assignmentMapper.toAssignmentWithoutProjectDTOs(assignments))
+                .build();
     }
 
     public EmployeeAssignmentsResponseDTO getAllActiveAssignmentsForEmployee(Long employeeId) {

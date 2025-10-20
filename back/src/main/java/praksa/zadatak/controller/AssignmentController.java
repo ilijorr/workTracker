@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.AssignmentDTO;
 import praksa.zadatak.dto.request.CreateAssignmentRequestDTO;
 import praksa.zadatak.dto.response.EmployeeAssignmentsResponseDTO;
+import praksa.zadatak.dto.response.ProjectAssignmentsResponseDTO;
 import praksa.zadatak.service.AssignmentService;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class AssignmentController {
     }
 
     @GetMapping("/project/{projectId}")
-    public ResponseEntity<List<AssignmentDTO>> getProjectAssignments(
+    public ResponseEntity<ProjectAssignmentsResponseDTO> getProjectAssignments(
             @PathVariable Long projectId
     ) {
         return ResponseEntity.ok(
