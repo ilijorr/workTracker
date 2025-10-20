@@ -33,13 +33,6 @@ public class AssignmentController {
         return ResponseEntity.ok(assignmentService.unassign(employeeId, projectId));
     }
 
-    /** TODO: the response doesn't really need every assignment to have the employee info
-              maybe create a new response which looks something like
-        {
-            employee: {employee data here}
-            assignments: [{proj1, hourRate1}, {proj2, hourRate2}, {proj3, hourRate3}]
-        }
-    **/
     @GetMapping("/employee/{employeeId}")
     public ResponseEntity<EmployeeAssignmentsResponseDTO> getEmployeeAssignments(
             @PathVariable Long employeeId
