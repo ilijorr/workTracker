@@ -37,15 +37,9 @@ public class JwtUtil {
                 .subject(user.getId().toString())
                 .expiration(this.generateExpirationDate())
                 .issuedAt(new Date())
-                .claim("roles", extractRolesFromUser(user))
+                .claim("role", user.getRole())
                 .signWith(this.key)
                 .compact();
-    }
-
-    private List<String> extractRolesFromUser(BaseUser user) {
-        return user.getRoles().stream()
-                .map(role -> role.getName().name())
-                .collect(Collectors.toList());
     }
 
     private Date generateExpirationDate() {
