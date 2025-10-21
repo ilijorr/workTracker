@@ -3,6 +3,7 @@ package praksa.zadatak.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.AssignmentDTO;
 import praksa.zadatak.dto.request.CreateAssignmentRequestDTO;
@@ -42,6 +43,16 @@ public class AssignmentController {
     ) {
         return ResponseEntity.ok(
                 assignmentService.getAllActiveAssignmentsForEmployee(employeeId)
+        );
+    }
+
+    @GetMapping("/me")
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    public ResponseEntity<EmployeeAssignmentsResponseDTO> getMyAssignments(
+            @AuthenticationPrincipal String employeeId
+    ) {
+        return ResponseEntity.ok(
+                assignmentService.getAllActiveAssignmentsForEmployee(Long.parseLong(employeeId))
         );
     }
 
