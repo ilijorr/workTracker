@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -17,6 +18,8 @@ public class GlobalExceptionHandler {
             ResourceNotFoundException.class,
             UnsupportedOperationException.class,
             UsernameTakenException.class,
+            AuthorizationDeniedException.class, // TODO: throws 500 instead of 401/403
+            NotVacationAuthorized.class,
             Exception.class,
     })
     public ResponseEntity<ErrorResponse> handleException(

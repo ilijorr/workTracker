@@ -3,6 +3,8 @@ package praksa.zadatak.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -11,6 +13,8 @@ import praksa.zadatak.dto.request.CreateVacationRequestDTO;
 import praksa.zadatak.dto.VacationDTO;
 import praksa.zadatak.enums.VacationStatus;
 import praksa.zadatak.exception.InvalidDateRangeException;
+import praksa.zadatak.exception.InvalidRequestException;
+import praksa.zadatak.exception.NotVacationAuthorized;
 import praksa.zadatak.exception.ResourceNotFoundException;
 import praksa.zadatak.mapper.VacationMapper;
 import praksa.zadatak.model.Employee;
@@ -24,6 +28,7 @@ import java.util.Date;
 @Service
 @RequiredArgsConstructor
 public class VacationServiceImpl implements VacationService {
+    private static final Logger log = LogManager.getLogger(VacationServiceImpl.class);
     private final VacationRepository vacationRepository;
     private final VacationMapper vacationMapper;
 
@@ -86,5 +91,14 @@ public class VacationServiceImpl implements VacationService {
                 PageRequest.of(page, size, Sort.by("startDate").descending())
         );
         return vacations.map(vacationMapper::toDTO);
+    }
+
+    @Transactional
+    public void delete(Long vacationId, Long employeeId) {
+        int deletedRows = vacationRepository.deleteByIdAndEmployeeId(vacationId, employeeId);
+        if (deletedRows != 1) {
+            log.error("Number of deleted rows: {}", deletedRows);
+            throw new NotVacationAuthorized();
+        }
     }
 }

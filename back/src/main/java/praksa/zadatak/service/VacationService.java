@@ -13,4 +13,6 @@ public interface VacationService {
 
     Page<VacationDTO> getByStatus(VacationStatus status, Integer page, Integer size);
     Page<VacationDTO> getByEmployee(Long employeeId, Integer page, Integer size);
+
+    void delete(Long vacationId, Long employeeId);
 }

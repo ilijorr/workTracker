@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.request.CreateVacationRequestDTO;
 import praksa.zadatak.dto.VacationDTO;
@@ -80,6 +81,14 @@ public class VacationController {
         );
     }
 
-    // TODO: brisanje
+    @DeleteMapping("/{vacationId}")
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    public ResponseEntity<Void> delete(
+            @AuthenticationPrincipal String employeeId,
+            @PathVariable Long vacationId
+    ) {
+        vacationService.delete(vacationId, Long.parseLong(employeeId));
+        return ResponseEntity.noContent().build();
+    }
 
 }
