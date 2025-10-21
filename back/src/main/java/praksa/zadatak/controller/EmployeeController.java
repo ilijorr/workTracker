@@ -1,6 +1,7 @@
 package praksa.zadatak.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -33,5 +34,16 @@ public class EmployeeController {
     ) {
         employeeService.setVacationDays(id, request.getValue());
         return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping
+    public ResponseEntity<Page<EmployeeDTO>> getAll(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "100") Integer size
+    ) {
+        return ResponseEntity.ok(
+                employeeService.getAll(page, size)
+        );
     }
 }
