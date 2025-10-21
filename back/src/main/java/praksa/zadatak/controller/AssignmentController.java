@@ -2,14 +2,13 @@ package praksa.zadatak.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.AssignmentDTO;
 import praksa.zadatak.dto.request.CreateAssignmentRequestDTO;
 import praksa.zadatak.dto.response.EmployeeAssignmentsResponseDTO;
 import praksa.zadatak.dto.response.ProjectAssignmentsResponseDTO;
 import praksa.zadatak.service.AssignmentService;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -18,6 +17,7 @@ public class AssignmentController {
     private final AssignmentService assignmentService;
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<AssignmentDTO> create(
             @RequestBody CreateAssignmentRequestDTO request
             ) {
@@ -27,6 +27,7 @@ public class AssignmentController {
     }
 
     @PatchMapping("/{employeeId}/{projectId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Boolean> unassign(
             @PathVariable Long employeeId,
             @PathVariable Long projectId
@@ -35,6 +36,7 @@ public class AssignmentController {
     }
 
     @GetMapping("/employee/{employeeId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<EmployeeAssignmentsResponseDTO> getEmployeeAssignments(
             @PathVariable Long employeeId
     ) {
@@ -44,6 +46,7 @@ public class AssignmentController {
     }
 
     @GetMapping("/project/{projectId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProjectAssignmentsResponseDTO> getProjectAssignments(
             @PathVariable Long projectId
     ) {

@@ -3,6 +3,7 @@ package praksa.zadatak.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.request.CreateWorkEntryRequestDTO;
 import praksa.zadatak.dto.request.UpdateWorkEntryRequestDTO;
@@ -19,6 +20,7 @@ public class WorkEntryController {
     private final WorkEntryService workEntryService;
 
     @PostMapping
+    @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<WorkEntryDTO> create(
             @RequestBody CreateWorkEntryRequestDTO request
             ) {
@@ -28,6 +30,7 @@ public class WorkEntryController {
     }
 
     @PatchMapping
+    @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<WorkEntryDTO> update(
             @RequestBody UpdateWorkEntryRequestDTO request
             ) {
@@ -37,6 +40,7 @@ public class WorkEntryController {
     }
 
     @DeleteMapping("/employee/{employeeId}/project/{projectId}/year-month/{yearMonth}")
+    @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<Void> delete(
             @PathVariable Long employeeId,
             @PathVariable Long projectId,
@@ -47,6 +51,7 @@ public class WorkEntryController {
     }
 
     @GetMapping("/year-month/{yearMonth}/employee/{employeeId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<WorkEntryDTO>> getByMonthForEmployee(
             @PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth,
             @PathVariable Long employeeId
@@ -57,6 +62,7 @@ public class WorkEntryController {
     }
 
     @GetMapping("/year-month/{yearMonth}/project/{projectId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<WorkEntryDTO>> getByMonthForProject(
             @PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth,
             @PathVariable Long projectId

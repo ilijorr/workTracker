@@ -3,6 +3,7 @@ package praksa.zadatak.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.request.CreateVacationRequestDTO;
 import praksa.zadatak.dto.VacationDTO;
@@ -16,6 +17,7 @@ public class VacationController {
     private final VacationService vacationService;
 
     @PostMapping
+    @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<VacationDTO> create(
             @RequestBody CreateVacationRequestDTO request
             ) {
@@ -25,6 +27,7 @@ public class VacationController {
     }
 
     @PatchMapping("/approve/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<VacationDTO> approve(
             @PathVariable("id") Long id
     ) {
@@ -34,6 +37,7 @@ public class VacationController {
     }
 
     @PatchMapping("/decline/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<VacationDTO> decline(
             @PathVariable("id") Long id
     ) {
@@ -43,6 +47,7 @@ public class VacationController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<VacationDTO>> getAll(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "100") Integer size
@@ -53,6 +58,7 @@ public class VacationController {
     }
 
     @GetMapping("/pending")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<VacationDTO>> getPending(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "100") Integer size
@@ -63,6 +69,7 @@ public class VacationController {
     }
 
     @GetMapping("/employee/{employeeId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<VacationDTO>> getByEmployee(
             @PathVariable Long employeeId,
             @RequestParam(defaultValue = "0") Integer page,

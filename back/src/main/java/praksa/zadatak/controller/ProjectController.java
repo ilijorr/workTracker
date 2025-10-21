@@ -2,6 +2,7 @@ package praksa.zadatak.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.request.CreateProjectRequestDTO;
 import praksa.zadatak.dto.ProjectDTO;
@@ -16,6 +17,7 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProjectDTO> create(
             @RequestBody CreateProjectRequestDTO request
             ) {
@@ -25,6 +27,7 @@ public class ProjectController {
     }
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<ProjectDTO>> get() {
         return ResponseEntity.ok(
                 projectService.get()
@@ -32,6 +35,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ProjectDTO> get(
             @PathVariable("id") Long id
     ) {
