@@ -1,5 +1,6 @@
 package praksa.zadatak.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.request.CreateEmployeeRequestDTO;
 import praksa.zadatak.dto.EmployeeDTO;
 import praksa.zadatak.enums.UserRole;
+import praksa.zadatak.exception.InvalidRequestException;
+import praksa.zadatak.exception.ResourceNotFoundException;
 import praksa.zadatak.exception.UsernameTakenException;
 import praksa.zadatak.mapper.EmployeeMapper;
 import praksa.zadatak.model.Employee;
@@ -47,4 +50,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Optional<Employee> get(Long id) {
         return employeeRepository.findById(id);
     }
+
+    @Transactional
+    public void setVacationDays(Long id, Integer days) {
+        if (days < 0) { throw new InvalidRequestException("Number of vacation days must be non-negative"); }
+        try {
+            Employee employee = employeeRepository.getReferenceById(id);
+            employee.setVacationDays(days);
+            employeeRepository.save(employee);
+        } catch (EntityNotFoundException ex) {
+            throw new ResourceNotFoundException("Employee", "id", id);
+        }
+    }
+
 }

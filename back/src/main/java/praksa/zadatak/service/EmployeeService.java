@@ -10,4 +10,5 @@ public interface EmployeeService {
     EmployeeDTO create(CreateEmployeeRequestDTO request);
     Employee getReference(Long id);
     Optional<Employee> get(Long id);
+    void setVacationDays(Long id, Integer days);
 }
