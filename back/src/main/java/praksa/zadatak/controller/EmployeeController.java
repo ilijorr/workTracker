@@ -26,7 +26,7 @@ public class EmployeeController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/vacation-days")
     public ResponseEntity<Void> setVacationDays(
             @PathVariable Long id,
             @RequestBody SingleFieldRequestDTO<Integer> request
