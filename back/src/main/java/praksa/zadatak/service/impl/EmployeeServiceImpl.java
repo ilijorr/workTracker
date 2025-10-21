@@ -3,6 +3,9 @@ package praksa.zadatak.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.request.CreateEmployeeRequestDTO;
@@ -53,6 +56,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public Optional<Employee> get(Long id) {
         return employeeRepository.findById(id);
+    }
+
+    public Page<EmployeeDTO> getAll(Integer page, Integer size) {
+        Page<Employee> employees = employeeRepository.findAll(
+                PageRequest.of(page, size)
+        );
+        return employees.map(employeeMapper::toDTO);
     }
 
     @Transactional
