@@ -28,6 +28,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final BaseUserService userService;
     private final PasswordEncoder passwordEncoder;
 
+    private final Integer DEFAULT_VACATION_DAYS = 30;
+
     @Transactional
     public EmployeeDTO create(CreateEmployeeRequestDTO request) {
         if (userService.existsByUsername(request.getUsername())) {
@@ -39,7 +41,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Employee employee = employeeMapper.toEntity(request);
         employee.setRole(UserRole.ROLE_EMPLOYEE);
+        employee.setVacationDays(DEFAULT_VACATION_DAYS);
         employee = employeeRepository.save(employee);
+        //TODO: return DTO vacationDays is always 0, even tho its 30 in the db
         return employeeMapper.toDTO(employee);
     }
 
