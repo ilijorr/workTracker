@@ -42,14 +42,14 @@ public class WorkEntryController {
         );
     }
 
-    @DeleteMapping("/employee/{employeeId}/project/{projectId}/year-month/{yearMonth}")
+    @DeleteMapping("/project/{projectId}/year-month/{yearMonth}")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<Void> delete(
-            @PathVariable Long employeeId,
+            @AuthenticationPrincipal String employeeId,
             @PathVariable Long projectId,
             @PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
             ) {
-        workEntryService.delete(employeeId, projectId, yearMonth);
+        workEntryService.delete(Long.parseLong(employeeId), projectId, yearMonth);
         return ResponseEntity.noContent().build();
     }
 
