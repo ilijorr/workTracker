@@ -74,6 +74,12 @@ public class WorkEntryServiceImpl implements WorkEntryService {
         ));
     }
 
+    public List<WorkEntryDTO> getByYearMonth(YearMonth yearMonth) {
+        return workEntryMapper.toDTOs(
+                workEntryRepository.findByYearMonth(yearMonth.toString())
+        );
+    }
+
     public List<WorkEntryDTO> getByMonthForEmployee(YearMonth yearMonth, Long employeeId) {
         return workEntryMapper.toDTOs(
                 workEntryRepository.findByAssignment_EmployeeIdAndYearMonth(

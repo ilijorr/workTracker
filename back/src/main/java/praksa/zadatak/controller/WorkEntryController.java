@@ -50,6 +50,16 @@ public class WorkEntryController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/year-month/{yearMonth}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<WorkEntryDTO>> getByYearMonth(
+            @PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
+    ) {
+        return ResponseEntity.ok(
+                workEntryService.getByYearMonth(yearMonth)
+        );
+    }
+
     @GetMapping("/year-month/{yearMonth}/employee/{employeeId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<WorkEntryDTO>> getByMonthForEmployee(

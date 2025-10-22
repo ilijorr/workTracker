@@ -12,6 +12,7 @@ public interface WorkEntryService {
     WorkEntryDTO update(UpdateWorkEntryRequestDTO request);
     void delete(Long employeeId, Long projectId, YearMonth yearMonth);
 
+    List<WorkEntryDTO> getByYearMonth(YearMonth yearMonth);
     List<WorkEntryDTO> getByMonthForEmployee(YearMonth yearMonth, Long employeeId);
     List<WorkEntryDTO> getByMonthForProject(YearMonth yearMonth, Long projectId);
 }
