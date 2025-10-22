@@ -13,9 +13,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class CreateVacationRequestDTO {
     @NotNull
-    private Long employeeId;
-
-    @NotNull
     @Future
     private Date startDate;
 

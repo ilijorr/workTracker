@@ -20,10 +20,11 @@ public class VacationController {
     @PostMapping
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<VacationDTO> create(
-            @RequestBody CreateVacationRequestDTO request
+            @RequestBody CreateVacationRequestDTO request,
+            @AuthenticationPrincipal String employeeId
             ) {
         return ResponseEntity.ok(
-                vacationService.create(request)
+                vacationService.create(, request)
         );
     }
 

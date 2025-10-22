@@ -6,7 +6,7 @@ import praksa.zadatak.dto.VacationDTO;
 import praksa.zadatak.enums.VacationStatus;
 
 public interface VacationService {
-    VacationDTO create(CreateVacationRequestDTO request);
+    VacationDTO create(Long employeeId, CreateVacationRequestDTO request);
     VacationDTO changeStatus(Long id, VacationStatus status);
 
     Page<VacationDTO> getAll(Integer page, Integer size);

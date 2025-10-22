@@ -13,7 +13,6 @@ import praksa.zadatak.dto.request.CreateVacationRequestDTO;
 import praksa.zadatak.dto.VacationDTO;
 import praksa.zadatak.enums.VacationStatus;
 import praksa.zadatak.exception.InvalidDateRangeException;
-import praksa.zadatak.exception.InvalidRequestException;
 import praksa.zadatak.exception.NotVacationAuthorized;
 import praksa.zadatak.exception.ResourceNotFoundException;
 import praksa.zadatak.mapper.VacationMapper;
@@ -35,14 +34,13 @@ public class VacationServiceImpl implements VacationService {
     private final EmployeeService employeeService;
 
     @Transactional
-    public VacationDTO create(CreateVacationRequestDTO request) {
+    public VacationDTO create(Long employeeId, CreateVacationRequestDTO request) {
         Date startDate = request.getStartDate();
         Date endDate = request.getEndDate();
         if (!startDate.before(endDate)) { throw new InvalidDateRangeException(); }
 
-        Long employeeId = request.getEmployeeId();
         try {
-            Employee employee = employeeService.getReference(request.getEmployeeId());
+            Employee employee = employeeService.getReference(employeeId);
             Vacation vacation = vacationMapper.toEntity(request);
             vacation.setEmployee(employee);
             vacation.setStatus(VacationStatus.PENDING);
