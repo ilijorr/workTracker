@@ -26,6 +26,7 @@ import praksa.zadatak.service.VacationService;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -113,5 +114,11 @@ public class VacationServiceImpl implements VacationService {
             log.error("Number of deleted rows: {}", deletedRows);
             throw new NotVacationAuthorized();
         }
+    }
+
+    private long getVacationLengthDays(Date start, Date end) {
+        return ChronoUnit.DAYS.between(
+                start.toInstant(), end.toInstant()
+        );
     }
 }
