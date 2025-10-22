@@ -65,21 +65,18 @@ public class VacationServiceImpl implements VacationService {
 
     @Transactional
     public VacationDTO changeStatus(Long id, VacationStatus status) {
-        try {
-            Vacation vacation = vacationRepository.getReferenceById(id);
-            if (vacation.getStatus() != VacationStatus.PENDING) {
-                throw new IllegalStateException("Can only change the status of pending vacations");
-            }
-            if (status == VacationStatus.APPROVED) {
-                int vacationLength = getVacationLengthDays(vacation.getStartDate(), vacation.getEndDate());
-                employeeService.deductVacationDays(vacation.getEmployee(), vacationLength);
-            }
-            vacation.setStatus(status);
-            vacation = vacationRepository.save(vacation);
-            return vacationMapper.toDTO(vacation);
-        } catch (EntityNotFoundException ex) {
-            throw new ResourceNotFoundException("Vacation", "id", id);
+        Vacation vacation = vacationRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Vacation", "id", id));
+        if (vacation.getStatus() != VacationStatus.PENDING) {
+            throw new IllegalStateException("Can only change the status of pending vacations");
         }
+        if (status == VacationStatus.APPROVED) {
+            int vacationLength = getVacationLengthDays(vacation.getStartDate(), vacation.getEndDate());
+            employeeService.deductVacationDays(vacation.getEmployee(), vacationLength);
+        }
+        vacation.setStatus(status);
+        vacation = vacationRepository.save(vacation);
+        return vacationMapper.toDTO(vacation);
     }
 
     public Page<VacationDTO> getAll(Integer page, Integer size) {
