@@ -22,7 +22,9 @@ import praksa.zadatak.repository.VacationRepository;
 import praksa.zadatak.service.EmployeeService;
 import praksa.zadatak.service.VacationService;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -35,9 +37,14 @@ public class VacationServiceImpl implements VacationService {
 
     @Transactional
     public VacationDTO create(Long employeeId, CreateVacationRequestDTO request) {
-        Date startDate = request.getStartDate();
-        Date endDate = request.getEndDate();
-        if (!startDate.before(endDate)) { throw new InvalidDateRangeException(); }
+        LocalDate startDate = request.getStartDate()
+                .toInstant().atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        LocalDate endDate = request.getEndDate()
+                .toInstant().atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        long vacationLengthDays = ChronoUnit.DAYS.between(startDate, endDate);
+        if (vacationLengthDays <= 0) { throw new InvalidDateRangeException(); }
 
         try {
             Employee employee = employeeService.getReference(employeeId);
