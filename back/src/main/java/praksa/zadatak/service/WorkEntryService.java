@@ -8,7 +8,7 @@ import java.time.YearMonth;
 import java.util.List;
 
 public interface WorkEntryService {
-    WorkEntryDTO create(CreateWorkEntryRequestDTO request);
+    WorkEntryDTO create(CreateWorkEntryRequestDTO request, Long employeeId);
     WorkEntryDTO update(UpdateWorkEntryRequestDTO request);
     void delete(Long employeeId, Long projectId, YearMonth yearMonth);
 

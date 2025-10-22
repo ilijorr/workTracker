@@ -3,6 +3,8 @@ package praksa.zadatak.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.request.CreateWorkEntryRequestDTO;
 import praksa.zadatak.dto.request.UpdateWorkEntryRequestDTO;
@@ -22,14 +24,16 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class WorkEntryServiceImpl implements WorkEntryService {
+    private static final Logger log = LogManager.getLogger(WorkEntryServiceImpl.class);
     private final WorkEntryRepository workEntryRepository;
     private final WorkEntryMapper workEntryMapper;
 
     private final AssignmentService assignmentService;
 
     @Transactional
-    public WorkEntryDTO create(CreateWorkEntryRequestDTO request) {
-        Long employeeId = request.getEmployeeId(); // will be read from auth later
+    public WorkEntryDTO create(
+            CreateWorkEntryRequestDTO request,
+            Long employeeId) {
         Long projectId = request.getProjectId();
         AssignmentId assignmentId = new AssignmentId(employeeId, projectId);
 
@@ -43,6 +47,7 @@ public class WorkEntryServiceImpl implements WorkEntryService {
 
             return workEntryMapper.toDTO(workEntry);
         } catch (EntityNotFoundException ex) {
+            log.warn("Employee {} is not assigned to project {}", employeeId, projectId);
             throw new ResourceNotFoundException("Assignment", "id", assignmentId);
         }
     }

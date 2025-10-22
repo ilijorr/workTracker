@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.request.CreateWorkEntryRequestDTO;
 import praksa.zadatak.dto.request.UpdateWorkEntryRequestDTO;
@@ -22,10 +23,11 @@ public class WorkEntryController {
     @PostMapping
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<WorkEntryDTO> create(
-            @RequestBody CreateWorkEntryRequestDTO request
+            @RequestBody CreateWorkEntryRequestDTO request,
+            @AuthenticationPrincipal String employeeId
             ) {
         return ResponseEntity.ok(
-                workEntryService.create(request)
+                workEntryService.create(request, Long.parseLong(employeeId))
         );
     }
 
@@ -59,6 +61,8 @@ public class WorkEntryController {
                 workEntryService.getByYearMonth(yearMonth)
         );
     }
+
+    // TODO: refactor 2 endpoints underneath to be getByEmployee/getByProject, with an optional dateMonth query
 
     @GetMapping("/year-month/{yearMonth}/employee/{employeeId}")
     @PreAuthorize("hasRole('ADMIN')")
