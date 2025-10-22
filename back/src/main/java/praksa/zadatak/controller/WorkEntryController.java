@@ -87,4 +87,15 @@ public class WorkEntryController {
         );
     }
 
+    @GetMapping("/me")
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    public ResponseEntity<List<WorkEntryDTO>> getMyWorkEntries(
+            @AuthenticationPrincipal String employeeId,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
+    ) {
+        return ResponseEntity.ok(
+                workEntryService.getByEmployee(Long.parseLong(employeeId), yearMonth)
+        );
+    }
+
 }
