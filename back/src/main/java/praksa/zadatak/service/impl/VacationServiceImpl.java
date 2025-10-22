@@ -39,7 +39,7 @@ public class VacationServiceImpl implements VacationService {
     public VacationDTO create(Long employeeId, CreateVacationRequestDTO request) {
         Date startDate = request.getStartDate();
         Date endDate = request.getEndDate();
-        long vacationLengthDays = getVacationLengthDays(startDate, endDate);
+        int vacationLengthDays = getVacationLengthDays(startDate, endDate);
         if (vacationLengthDays <= 0) { throw new InvalidDateRangeException(); }
 
         try {
@@ -110,8 +110,8 @@ public class VacationServiceImpl implements VacationService {
         }
     }
 
-    private long getVacationLengthDays(Date start, Date end) {
-        return ChronoUnit.DAYS.between(
+    private int getVacationLengthDays(Date start, Date end) {
+        return (int) ChronoUnit.DAYS.between(
                 start.toInstant(), end.toInstant()
         );
     }
