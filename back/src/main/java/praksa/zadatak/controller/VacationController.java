@@ -24,7 +24,7 @@ public class VacationController {
             @AuthenticationPrincipal String employeeId
             ) {
         return ResponseEntity.ok(
-                vacationService.create(, request)
+                vacationService.create(Long.parseLong(employeeId), request)
         );
     }
 
