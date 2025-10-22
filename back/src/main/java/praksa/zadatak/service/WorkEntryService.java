@@ -13,6 +13,6 @@ public interface WorkEntryService {
     void delete(Long employeeId, Long projectId, YearMonth yearMonth);
 
     List<WorkEntryDTO> getByYearMonth(YearMonth yearMonth);
-    List<WorkEntryDTO> getByMonthForEmployee(YearMonth yearMonth, Long employeeId);
-    List<WorkEntryDTO> getByMonthForProject(YearMonth yearMonth, Long projectId);
+    List<WorkEntryDTO> getByEmployee(Long employeeId, YearMonth yearMonth);
+    List<WorkEntryDTO> getByProject(Long projectId, YearMonth yearMonth);
 }

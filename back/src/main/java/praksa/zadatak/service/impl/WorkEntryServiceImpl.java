@@ -88,18 +88,19 @@ public class WorkEntryServiceImpl implements WorkEntryService {
         );
     }
 
-    public List<WorkEntryDTO> getByMonthForEmployee(YearMonth yearMonth, Long employeeId) {
-        return workEntryMapper.toDTOs(
-                workEntryRepository.findByAssignment_EmployeeIdAndYearMonth(
-                        employeeId, yearMonth.toString())
-        );
+    public List<WorkEntryDTO> getByEmployee(Long employeeId, YearMonth yearMonth) {
+        List<WorkEntry> workEntries = (yearMonth == null) ?
+                workEntryRepository.findByAssignment_EmployeeId(employeeId) :
+                workEntryRepository.findByAssignment_EmployeeIdAndYearMonth(employeeId, yearMonth.toString());
+
+        return workEntryMapper.toDTOs(workEntries);
     }
 
-    public List<WorkEntryDTO> getByMonthForProject(YearMonth yearMonth, Long projectId) {
-        return workEntryMapper.toDTOs(
-                workEntryRepository.findByAssignment_ProjectIdAndYearMonth(
-                        projectId, yearMonth.toString()
-                )
-        );
+    public List<WorkEntryDTO> getByProject(Long projectId, YearMonth yearMonth) {
+        List<WorkEntry> workEntries = (yearMonth == null) ?
+                workEntryRepository.findByAssignment_ProjectId(projectId) :
+                workEntryRepository.findByAssignment_ProjectIdAndYearMonth(projectId, yearMonth.toString());
+
+        return workEntryMapper.toDTOs(workEntries);
     }
 }

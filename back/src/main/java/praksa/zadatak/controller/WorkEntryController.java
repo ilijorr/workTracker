@@ -63,27 +63,27 @@ public class WorkEntryController {
         );
     }
 
-    // TODO: refactor 2 endpoints underneath to be getByEmployee/getByProject, with an optional dateMonth query
+    // TODO: change the response to only send the employee/project data once, and exclude it from the rest of assignments
 
-    @GetMapping("/year-month/{yearMonth}/employee/{employeeId}")
+    @GetMapping("/employee/{employeeId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<WorkEntryDTO>> getByMonthForEmployee(
-            @PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth,
-            @PathVariable Long employeeId
+            @PathVariable Long employeeId,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
     ) {
         return ResponseEntity.ok(
-                workEntryService.getByMonthForEmployee(yearMonth, employeeId)
+                workEntryService.getByEmployee(employeeId, yearMonth)
         );
     }
 
-    @GetMapping("/year-month/{yearMonth}/project/{projectId}")
+    @GetMapping("/project/{projectId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<WorkEntryDTO>> getByMonthForProject(
-            @PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth,
-            @PathVariable Long projectId
+            @PathVariable Long projectId,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
     ) {
         return ResponseEntity.ok(
-                workEntryService.getByMonthForProject(yearMonth, projectId)
+                workEntryService.getByProject(projectId, yearMonth)
         );
     }
 

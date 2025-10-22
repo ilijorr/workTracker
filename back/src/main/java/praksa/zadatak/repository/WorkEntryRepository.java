@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface WorkEntryRepository extends JpaRepository<WorkEntry, WorkEntryId> {
     List<WorkEntry> findByYearMonth(String yearMonth);
+    List<WorkEntry> findByAssignment_EmployeeId(Long employeeId);
     List<WorkEntry> findByAssignment_EmployeeIdAndYearMonth(Long employeeId, String yearMonth);
+    List<WorkEntry> findByAssignment_ProjectId(Long projectId);
     List<WorkEntry> findByAssignment_ProjectIdAndYearMonth(Long projectId, String yearMonth);
 }
