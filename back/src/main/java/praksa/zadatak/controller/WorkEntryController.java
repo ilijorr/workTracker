@@ -34,10 +34,11 @@ public class WorkEntryController {
     @PatchMapping
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<WorkEntryDTO> update(
-            @RequestBody UpdateWorkEntryRequestDTO request
+            @RequestBody UpdateWorkEntryRequestDTO request,
+            @AuthenticationPrincipal String employeeId
             ) {
         return ResponseEntity.ok(
-                workEntryService.update(request)
+                workEntryService.update(request, Long.parseLong(employeeId))
         );
     }
 

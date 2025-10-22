@@ -14,8 +14,6 @@ import java.time.YearMonth;
 @NoArgsConstructor
 public class UpdateWorkEntryRequestDTO {
     @NotNull
-    private Long employeeId;
-    @NotNull
     private Long projectId;
     @NotNull
     private YearMonth yearMonth;

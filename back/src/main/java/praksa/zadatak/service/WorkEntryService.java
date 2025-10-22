@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface WorkEntryService {
     WorkEntryDTO create(CreateWorkEntryRequestDTO request, Long employeeId);
-    WorkEntryDTO update(UpdateWorkEntryRequestDTO request);
+    WorkEntryDTO update(UpdateWorkEntryRequestDTO request, Long employeeId);
     void delete(Long employeeId, Long projectId, YearMonth yearMonth);
 
     List<WorkEntryDTO> getByYearMonth(YearMonth yearMonth);

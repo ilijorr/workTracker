@@ -53,12 +53,13 @@ public class WorkEntryServiceImpl implements WorkEntryService {
     }
 
     @Transactional
-    public WorkEntryDTO update(UpdateWorkEntryRequestDTO request) {
-        Long employeeId = request.getEmployeeId(); // will be read from auth later
-        Long projectId = request.getProjectId();
-        AssignmentId assignmentId = new AssignmentId(employeeId, projectId);
-        YearMonth yearMonth = request.getYearMonth();
-        WorkEntryId workEntryId = new WorkEntryId(assignmentId, yearMonth.toString());
+    public WorkEntryDTO update(
+            UpdateWorkEntryRequestDTO request,
+            Long employeeId) {
+        WorkEntryId workEntryId = new WorkEntryId(
+                new AssignmentId(employeeId, request.getProjectId()),
+                request.getYearMonth().toString()
+        );
 
         try {
             WorkEntry workEntry = workEntryRepository.getReferenceById(workEntryId);
@@ -67,6 +68,8 @@ public class WorkEntryServiceImpl implements WorkEntryService {
 
             return workEntryMapper.toDTO(workEntry);
         } catch (EntityNotFoundException ex) {
+            log.warn("Employee {} is not assigned to project {}, or hasn't worked on it in the month {}",
+                    employeeId, request.getProjectId(), request.getYearMonth());
             throw new ResourceNotFoundException("Work entry", "id", workEntryId);
         }
     }
