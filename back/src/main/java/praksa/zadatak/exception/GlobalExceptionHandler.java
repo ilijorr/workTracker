@@ -20,6 +20,7 @@ public class GlobalExceptionHandler {
             UsernameTakenException.class,
             AuthorizationDeniedException.class, // TODO: throws 500 instead of 401/403
             NotVacationAuthorized.class,
+            NotEnoughVacationDaysException.class,
             Exception.class,
     })
     public ResponseEntity<ErrorResponse> handleException(
