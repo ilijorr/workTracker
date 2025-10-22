@@ -12,6 +12,7 @@ import praksa.zadatak.dto.request.CreateEmployeeRequestDTO;
 import praksa.zadatak.dto.EmployeeDTO;
 import praksa.zadatak.enums.UserRole;
 import praksa.zadatak.exception.InvalidRequestException;
+import praksa.zadatak.exception.NotEnoughVacationDaysException;
 import praksa.zadatak.exception.ResourceNotFoundException;
 import praksa.zadatak.exception.UsernameTakenException;
 import praksa.zadatak.mapper.EmployeeMapper;
@@ -77,4 +78,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    @Transactional
+    public void deductVacationDays(Employee employee, Integer days) {
+        int newVacationDayCount = employee.getVacationDays() - days;
+        if (newVacationDayCount < 0) { throw new NotEnoughVacationDaysException(); }
+        employee.setVacationDays(newVacationDayCount);
+        employeeRepository.save(employee);
+    }
 }

@@ -70,6 +70,10 @@ public class VacationServiceImpl implements VacationService {
             if (vacation.getStatus() != VacationStatus.PENDING) {
                 throw new IllegalStateException("Can only change the status of pending vacations");
             }
+            if (status == VacationStatus.APPROVED) {
+                int vacationLength = getVacationLengthDays(vacation.getStartDate(), vacation.getEndDate());
+                employeeService.deductVacationDays(vacation.getEmployee(), vacationLength);
+            }
             vacation.setStatus(status);
             vacation = vacationRepository.save(vacation);
             return vacationMapper.toDTO(vacation);
