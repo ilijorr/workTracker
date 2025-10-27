@@ -5,6 +5,7 @@ import {TableConfig} from '../../../../shared/models/table-column';
 import {PageResponse} from '../../../../models/response/PageResponse';
 import {Employee} from '../../../../models/Employee';
 import {DataTableComponent} from '../../../../shared/components/data-table/data-table';
+import {TableConfigService} from '../../../../shared/services/table-config.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -16,6 +17,7 @@ import {DataTableComponent} from '../../../../shared/components/data-table/data-
 })
 export class AdminDashboard implements OnInit {
   employeeService: EmployeeService = inject(EmployeeService);
+  tableConfigService: TableConfigService = inject(TableConfigService);
   router: Router = inject(Router);
 
   employeeData = signal<PageResponse<Employee>>({
@@ -30,21 +32,7 @@ export class AdminDashboard implements OnInit {
 
   isLoading = signal(false);
 
-  employeeTableConfig: TableConfig = {
-    columns: [
-      {
-        key: 'username', label: 'Username', type: 'link',
-        linkConfig: {
-          routePath: '/employee',
-          idField: 'id',
-          displayField: 'username',
-        }
-      },
-      { key: 'vacationDays', label: 'Vacation Days' },
-    ],
-    striped: true,
-    hover: true,
-  };
+  employeeTableConfig: TableConfig = this.tableConfigService.getEmployeeTableConfig();
 
   loadEmployees(page: number) {
     this.isLoading.set(true);
