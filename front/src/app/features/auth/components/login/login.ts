@@ -42,7 +42,7 @@ export class Login {
         this.isLoading = false;
         console.log("Login successful");
 
-        // void this.router.navigate(['/dashboard']);
+        void this.router.navigate(['/dashboard']);
       },
       error: (error: HttpErrorResponse) => {
         this.isLoading = false;
