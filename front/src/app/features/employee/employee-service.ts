@@ -4,6 +4,7 @@ import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import {Employee} from '../../models/Employee';
 import {PageResponse} from '../../models/response/PageResponse';
+import {CreateEmployeeRequest} from '../../models/request/CreateEmployeeRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,16 @@ export class EmployeeService {
 
   get(id: number): Observable<Employee> {
     return this.http.get<Employee>(`${this.apiUrl}/${id}`);
+  }
+
+  create(request: CreateEmployeeRequest): Observable<Employee> {
+    return this.http.post<Employee>(`${this.apiUrl}`, request);
+  }
+
+  setVacationDays(id: number, vacationDays: number): Observable<void> {
+    return this.http.patch<void>(
+      `${this.apiUrl}/${id}/vacation-days`,
+      {'value': vacationDays}
+    );
   }
 }

@@ -1,0 +1,162 @@
+<div class="page-container">
+  <div class="page-content">
+    <h1>Employee Management</h1>
+
+    <div class="management-grid">
+      <!-- Employee Table - Left Side -->
+      <div class="employee-table-section">
+        <h2>Employees</h2>
+        @if (isLoadingEmployees()) {
+          <p>Loading employees...</p>
+        } @else {
+          <app-data-table
+            [data]="employeeData()"
+            [config]="tableConfig"
+            (pageChange)="loadEmployees($event)"
+            (sort)="onSort($event)"
+          />
+        }
+      </div>
+
+      <!-- Actions Panel - Right Side -->
+      <div class="actions-panel">
+        <!-- Create Employee Section -->
+        <div class="action-card">
+          <h3>Create Employee</h3>
+          <form [formGroup]="createEmployeeForm" (ngSubmit)="createEmployee()" class="action-form">
+            <div class="form-group">
+              <label for="username" class="form-label">Username</label>
+              <input
+                type="text"
+                id="username"
+                formControlName="username"
+                class="form-control"
+                [class.is-invalid]="createEmployeeForm.get('username')?.invalid && createEmployeeForm.get('username')?.touched"
+                placeholder="Enter username"
+              />
+              @if (createEmployeeForm.get('username')?.invalid && createEmployeeForm.get('username')?.touched) {
+                <div class="invalid-feedback">
+                  @if (createEmployeeForm.get('username')?.errors?.['required']) {
+                    Username is required
+                  }
+                  @if (createEmployeeForm.get('username')?.errors?.['minlength']) {
+                    Username must be at least 3 characters
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                id="password"
+                formControlName="password"
+                class="form-control"
+                [class.is-invalid]="createEmployeeForm.get('password')?.invalid && createEmployeeForm.get('password')?.touched"
+                placeholder="Enter password"
+              />
+              @if (createEmployeeForm.get('password')?.invalid && createEmployeeForm.get('password')?.touched) {
+                <div class="invalid-feedback">
+                  @if (createEmployeeForm.get('password')?.errors?.['required']) {
+                    Password is required
+                  }
+                  @if (createEmployeeForm.get('password')?.errors?.['minlength']) {
+                    Password must be at least 5 characters
+                  }
+                </div>
+              }
+            </div>
+
+            @if (createEmployeeMessage()) {
+              <div class="alert" [class.alert-success]="createEmployeeMessage().includes('success')" [class.alert-danger]="!createEmployeeMessage().includes('success')">
+                {{ createEmployeeMessage() }}
+              </div>
+            }
+
+            <button
+              type="submit"
+              class="btn btn-primary w-100"
+              [disabled]="isCreatingEmployee() || createEmployeeForm.invalid"
+            >
+              @if (isCreatingEmployee()) {
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Creating...
+              } @else {
+                Create Employee
+              }
+            </button>
+          </form>
+        </div>
+
+        <!-- Set Vacation Days Section -->
+        <div class="action-card">
+          <h3>Set Vacation Days</h3>
+          <form [formGroup]="vacationDaysForm" (ngSubmit)="updateVacationDays()" class="action-form">
+            <div class="form-group">
+              <label for="employeeId" class="form-label">Employee</label>
+              <select
+                id="employeeId"
+                formControlName="employeeId"
+                class="form-control"
+                [class.is-invalid]="vacationDaysForm.get('employeeId')?.invalid && vacationDaysForm.get('employeeId')?.touched"
+              >
+                <option value="">Select an employee</option>
+                @for (employee of employeeData().content; track employee.id) {
+                  <option [value]="employee.id">{{ employee.username }}</option>
+                }
+              </select>
+              @if (vacationDaysForm.get('employeeId')?.invalid && vacationDaysForm.get('employeeId')?.touched) {
+                <div class="invalid-feedback">
+                  Please select an employee
+                </div>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="vacationDays" class="form-label">Vacation Days</label>
+              <input
+                type="number"
+                id="vacationDays"
+                formControlName="vacationDays"
+                class="form-control"
+                [class.is-invalid]="vacationDaysForm.get('vacationDays')?.invalid && vacationDaysForm.get('vacationDays')?.touched"
+                placeholder="Enter vacation days"
+                min="0"
+              />
+              @if (vacationDaysForm.get('vacationDays')?.invalid && vacationDaysForm.get('vacationDays')?.touched) {
+                <div class="invalid-feedback">
+                  @if (vacationDaysForm.get('vacationDays')?.errors?.['required']) {
+                    Vacation days is required
+                  }
+                  @if (vacationDaysForm.get('vacationDays')?.errors?.['min']) {
+                    Vacation days must be 0 or greater
+                  }
+                </div>
+              }
+            </div>
+
+            @if (vacationUpdateMessage()) {
+              <div class="alert" [class.alert-success]="vacationUpdateMessage().includes('success')" [class.alert-danger]="!vacationUpdateMessage().includes('success')">
+                {{ vacationUpdateMessage() }}
+              </div>
+            }
+
+            <button
+              type="submit"
+              class="btn btn-primary w-100"
+              [disabled]="isUpdatingVacation() || vacationDaysForm.invalid"
+            >
+              @if (isUpdatingVacation()) {
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Updating...
+              } @else {
+                Update Vacation Days
+              }
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
