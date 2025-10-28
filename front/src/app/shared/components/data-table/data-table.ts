@@ -62,13 +62,23 @@ export class DataTableComponent<T> {
 
   getLinkPath(item: any, column: TableColumn): string {
     if (!column.linkConfig) return '';
-    const id = item[column.linkConfig.idField];
+    const id = this.getNestedValue(item, column.linkConfig.idField);
     return `${column.linkConfig.routePath}/${id}`;
   }
 
   getLinkText(item: any, column: TableColumn): string {
     if (!column.linkConfig) return '';
     const displayField = column.linkConfig.displayField || column.key;
-    return item[displayField] || '';
+    return this.getNestedValue(item, displayField) || '';
+  }
+
+  getNestedValue(obj: any, path: string): any {
+    return path.split('.').reduce((current, key) => {
+      return current && current[key] !== undefined ? current[key] : null;
+    }, obj);
+  }
+
+  getCellValue(item: any, column: TableColumn): any {
+    return this.getNestedValue(item, column.key);
   }
 }

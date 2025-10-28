@@ -34,7 +34,7 @@
                   {{ getLinkText(item, column) }}
                 </a>
               } @else {
-                {{ formatValue(item[column.key], column.type || 'text') }}
+                {{ formatValue(getCellValue(item, column), column.type || 'text') }}
               }
             </td>
           }

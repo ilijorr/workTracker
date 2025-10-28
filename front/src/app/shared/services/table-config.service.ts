@@ -28,26 +28,39 @@ export class TableConfigService {
     return {
       columns: [
         {
-          key: 'username', label: 'Username', type: 'link',
+          key: 'assignment.employee.username',
+          label: 'Employee',
+          type: 'link',
           linkConfig: {
             routePath: '/employee',
-            idField: 'employeeId',
-            displayField: 'username',
+            idField: 'assignment.employee.id',
+            displayField: 'assignment.employee.username',
           }
         },
         {
-          key: 'projectName', label: 'Project Name', type: 'link',
+          key: 'assignment.project.name',
+          label: 'Project Name',
+          type: 'link',
           linkConfig: {
             routePath: '/project',
-            idField: 'projectId',
-            displayField: 'projectName',
+            idField: 'assignment.project.id',
+            displayField: 'assignment.project.name',
           }
         },
         {
-          key: 'yearMonth', label: 'Month', type: 'text',
+          key: 'yearMonth',
+          label: 'Month',
+          type: 'text',
         },
         {
-          key: 'hourCount', label: 'Hours', type: 'number',
+          key: 'hourCount',
+          label: 'Hours',
+          type: 'number',
+        },
+        {
+          key: 'assignment.hourRate',
+          label: 'Rate',
+          type: 'number',
         }
       ],
       striped: true,
