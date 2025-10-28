@@ -46,4 +46,14 @@ public class EmployeeController {
                 employeeService.getAll(page, size)
         );
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/{id}")
+    public ResponseEntity<EmployeeDTO> get(
+            @PathVariable Long id
+    ) {
+        return ResponseEntity.ok(
+                employeeService.getDTO(id)
+        );
+    }
 }

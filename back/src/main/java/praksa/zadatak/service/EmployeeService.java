@@ -12,6 +12,7 @@ public interface EmployeeService {
     Employee getReference(Long id);
     Page<EmployeeDTO> getAll(Integer page, Integer size);
     Optional<Employee> get(Long id);
+    EmployeeDTO getDTO(Long id);
     void setVacationDays(Long id, Integer days);
     void deductVacationDays(Employee employee, Integer days);
 }

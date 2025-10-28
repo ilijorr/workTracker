@@ -85,4 +85,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setVacationDays(newVacationDayCount);
         employeeRepository.save(employee);
     }
+
+    @Override
+    public EmployeeDTO getDTO(Long id) {
+        return employeeMapper.toDTO(
+                employeeRepository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", id))
+        );
+    }
 }
