@@ -1,14 +1,13 @@
 package praksa.zadatak.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.request.CreateProjectRequestDTO;
 import praksa.zadatak.dto.ProjectDTO;
 import praksa.zadatak.service.ProjectService;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,9 +27,12 @@ public class ProjectController {
 
     @GetMapping
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<ProjectDTO>> get() {
+    public ResponseEntity<Page<ProjectDTO>> get(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "100") Integer size
+    ) {
         return ResponseEntity.ok(
-                projectService.get()
+                projectService.get(page, size)
         );
     }
 

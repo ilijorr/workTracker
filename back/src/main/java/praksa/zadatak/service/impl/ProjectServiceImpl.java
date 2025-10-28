@@ -2,6 +2,8 @@ package praksa.zadatak.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.request.CreateProjectRequestDTO;
 import praksa.zadatak.dto.ProjectDTO;
@@ -10,9 +12,6 @@ import praksa.zadatak.mapper.ProjectMapper;
 import praksa.zadatak.model.Project;
 import praksa.zadatak.repository.ProjectRepository;
 import praksa.zadatak.service.ProjectService;
-
-import java.util.List;
-
 
 @Service
 @RequiredArgsConstructor
@@ -27,9 +26,11 @@ public class ProjectServiceImpl implements ProjectService {
         return projectMapper.toDTO(project);
     }
 
-    public List<ProjectDTO> get() {
-        List<Project> projects = projectRepository.findAll();
-        return projectMapper.toDTOs(projects);
+    public Page<ProjectDTO> get(Integer page, Integer size) {
+        Page<Project> projects = projectRepository.findAll(
+                PageRequest.of(page, size)
+        );
+        return projects.map(projectMapper::toDTO);
     }
 
     public ProjectDTO get(Long id) {
