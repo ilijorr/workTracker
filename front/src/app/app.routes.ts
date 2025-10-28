@@ -26,10 +26,19 @@ export const routes: Routes = [
   },
   {
     path: 'employee/:id',
-    loadComponent: () => import('./features/employee/components/employee/employee').then(m => m.Employee),
+    loadComponent: () =>
+      import('./features/employee/components/employee/employee').then(m => m.Employee),
     canActivate: [
       adminGuard
     ],
+  },
+  {
+    path: 'project/:id',
+    loadComponent: () =>
+      import('./features/project/components/project/project').then(m => m.Project),
+    canActivate: [
+      authGuard,
+    ]
   },
   {
     path: '',
