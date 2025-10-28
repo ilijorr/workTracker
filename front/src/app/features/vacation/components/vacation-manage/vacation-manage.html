@@ -1,0 +1,48 @@
+<div class="page-container">
+  <div class="page-content">
+    <h1>Vacation Request Management</h1>
+
+    <!-- Pending Requests Section -->
+    <div class="vacation-section">
+      <h2>Pending Requests</h2>
+      @if (isLoadingPending()) {
+        <p>Loading pending requests...</p>
+      } @else {
+        @if (pendingRequestsData().content.length === 0) {
+          <div class="no-requests">
+            <p>No pending vacation requests at this time.</p>
+          </div>
+        } @else {
+          <app-data-table
+            [data]="pendingRequestsData()"
+            [config]="pendingTableConfig"
+            (pageChange)="loadPendingRequests($event)"
+            (sort)="onSort($event)"
+            (action)="onTableAction($event)"
+          />
+        }
+      }
+    </div>
+
+    <!-- All Requests Section -->
+    <div class="vacation-section">
+      <h2>All Vacation Requests</h2>
+      @if (isLoadingAll()) {
+        <p>Loading all requests...</p>
+      } @else {
+        @if (allRequestsData().content.length === 0) {
+          <div class="no-requests">
+            <p>No vacation requests found.</p>
+          </div>
+        } @else {
+          <app-data-table
+            [data]="allRequestsData()"
+            [config]="allRequestsTableConfig"
+            (pageChange)="loadAllRequests($event)"
+            (sort)="onSort($event)"
+          />
+        }
+      }
+    </div>
+  </div>
+</div>
