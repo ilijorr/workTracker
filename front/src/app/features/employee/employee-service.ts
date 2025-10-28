@@ -16,7 +16,10 @@ export class EmployeeService {
     const params = new HttpParams()
       .set('page', page)
       .set('size', size);
-    console.log(params);
     return this.http.get<PageResponse<Employee>>(this.apiUrl, { params });
+  }
+
+  get(id: number): Observable<Employee> {
+    return this.http.get<Employee>(`${this.apiUrl}/${id}`);
   }
 }
