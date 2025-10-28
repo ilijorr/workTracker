@@ -77,67 +77,8 @@
   margin: 0 var(--space-2);
 }
 
-.btn {
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-md);
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  border: var(--border-width) solid;
-  transition: all var(--transition-fast);
-  cursor: pointer;
-}
-
-.btn-outline-primary {
-  color: var(--primary-main);
-  border-color: var(--primary-main);
-  background-color: transparent;
-}
-
-.btn-outline-primary:hover:not(:disabled) {
-  background-color: var(--primary-main);
-  color: var(--text-on-primary);
-}
-
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.btn-sm {
-  padding: var(--space-1) var(--space-2);
-  font-size: var(--text-xs);
-}
-
-.text-center {
-  text-align: center;
-}
-
 .text-muted {
   color: var(--text-tertiary);
-}
-
-.d-flex {
-  display: flex;
-}
-
-.justify-content-between {
-  justify-content: space-between;
-}
-
-.align-items-center {
-  align-items: center;
-}
-
-.mt-3 {
-  margin-top: var(--space-4);
-}
-
-.me-2 {
-  margin-right: var(--space-2);
-}
-
-.ms-2 {
-  margin-left: var(--space-2);
 }
 
 .table-link {
@@ -165,53 +106,6 @@
   margin-right: 0;
 }
 
-.btn-success {
-  background-color: var(--success);
-  border-color: var(--success);
-  color: var(--text-on-primary);
-}
-
-.btn-success:hover:not(:disabled) {
-  background-color: var(--primary-dark);
-  border-color: var(--primary-dark);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
-.btn-danger {
-  background-color: var(--error);
-  border-color: var(--error);
-  color: var(--text-on-primary);
-}
-
-.btn-danger:hover:not(:disabled) {
-  background-color: #c53030;
-  border-color: #c53030;
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
-.spinner-border {
-  display: inline-block;
-  width: 0.875rem;
-  height: 0.875rem;
-  border: 0.125em solid currentcolor;
-  border-right-color: transparent;
-  border-radius: 50%;
-  animation: spinner-border 0.75s linear infinite;
-}
-
-.spinner-border-sm {
-  width: 0.75rem;
-  height: 0.75rem;
-  border-width: 0.1em;
-}
-
-@keyframes spinner-border {
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 /* Responsive */
 @media (max-width: 768px) {
