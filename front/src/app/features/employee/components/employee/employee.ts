@@ -34,12 +34,12 @@ export class Employee implements OnInit {
     this.employeeService.get(id).subscribe({
       next: (employee) => {
         this.employee.set(employee);
-        this.isLoading.set(false);
       },
       error: (error) => {
         console.error('Failed to load employee:', error);
-        this.isLoading.set(false);
       }
     });
+    this.isLoading.set(false);
   }
+
 }
