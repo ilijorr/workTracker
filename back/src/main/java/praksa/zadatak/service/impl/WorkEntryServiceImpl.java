@@ -5,6 +5,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.request.CreateWorkEntryRequestDTO;
 import praksa.zadatak.dto.request.UpdateWorkEntryRequestDTO;
@@ -82,10 +84,12 @@ public class WorkEntryServiceImpl implements WorkEntryService {
         ));
     }
 
-    public List<WorkEntryDTO> getByYearMonth(YearMonth yearMonth) {
-        return workEntryMapper.toDTOs(
-                workEntryRepository.findByYearMonth(yearMonth.toString())
+    public Page<WorkEntryDTO> getByYearMonth(YearMonth yearMonth, Integer page, Integer size) {
+        Page<WorkEntry> workEntries = workEntryRepository.findByYearMonth(
+                yearMonth.toString(),
+                PageRequest.of(page, size)
         );
+        return workEntries.map(workEntryMapper::toDTO);
     }
 
     public List<WorkEntryDTO> getByEmployee(Long employeeId, YearMonth yearMonth) {

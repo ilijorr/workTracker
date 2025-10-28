@@ -1,6 +1,7 @@
 package praksa.zadatak.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -55,11 +56,13 @@ public class WorkEntryController {
 
     @GetMapping("/year-month/{yearMonth}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<WorkEntryDTO>> getByYearMonth(
-            @PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
+    public ResponseEntity<Page<WorkEntryDTO>> getByYearMonth(
+            @PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "100") Integer size
     ) {
         return ResponseEntity.ok(
-                workEntryService.getByYearMonth(yearMonth)
+                workEntryService.getByYearMonth(yearMonth, page, size)
         );
     }
 
