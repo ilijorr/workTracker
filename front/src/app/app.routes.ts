@@ -25,9 +25,25 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'employee/manage',
+    loadComponent: () =>
+      import('./features/employee/components/employee-manage/employee-manage').then(m => m.EmployeeManageComponent),
+    canActivate: [
+      adminGuard
+    ],
+  },
+  {
     path: 'employee/:id',
     loadComponent: () =>
       import('./features/employee/components/employee/employee').then(m => m.Employee),
+    canActivate: [
+      adminGuard
+    ],
+  },
+  {
+    path: 'vacation/manage',
+    loadComponent: () =>
+      import('./features/vacation/components/vacation-manage/vacation-manage').then(m => m.VacationManageComponent),
     canActivate: [
       adminGuard
     ],
