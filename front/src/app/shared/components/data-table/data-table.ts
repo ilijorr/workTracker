@@ -2,7 +2,7 @@ import { Component, input, output, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PageResponse } from '../../../models/response/PageResponse';
-import { TableColumn, TableConfig } from '../../models/table-column';
+import { TableColumn, TableConfig, ActionButton } from '../../models/table-column';
 
 @Component({
   selector: 'app-data-table',
@@ -16,24 +16,13 @@ export class DataTableComponent<T> {
 
   pageChange = output<number>();
   sort = output<{ field: string; direction: 'asc' | 'desc' }>();
+  action = output<{ action: string; row: T }>();
 
   displayedColumns = computed(() => {
     const excludeFields = this.config().excludeFields || [];
     return this.config().columns.filter(col => !excludeFields.includes(col.key));
   });
 
-  displayedData = computed(() => {
-    const excludeFields = this.config().excludeFields || [];
-    return this.data().content.map(item => {
-      const filteredItem: any = {};
-      Object.keys(item as any).forEach(key => {
-        if (!excludeFields.includes(key)) {
-          filteredItem[key] = (item as any)[key];
-        }
-      });
-      return filteredItem;
-    });
-  });
 
   onPageChange(page: number) {
     this.pageChange.emit(page);
@@ -80,5 +69,17 @@ export class DataTableComponent<T> {
 
   getCellValue(item: any, column: TableColumn): any {
     return this.getNestedValue(item, column.key);
+  }
+
+  onAction(actionName: string, row: T) {
+    this.action.emit({ action: actionName, row });
+  }
+
+  isButtonDisabled(button: ActionButton, row: T): boolean {
+    return button.disabled ? button.disabled(row) : false;
+  }
+
+  isButtonLoading(button: ActionButton, row: T): boolean {
+    return button.loading ? button.loading(row) : false;
   }
 }

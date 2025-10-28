@@ -19,10 +19,15 @@
             }
           </th>
         }
+        @if (config().actions) {
+          <th scope="col" [style.width]="config().actions?.width || 'auto'">
+            Actions
+          </th>
+        }
       </tr>
     </thead>
     <tbody>
-      @for (item of displayedData(); track $index) {
+      @for (item of data().content; track $index) {
         <tr>
           @for (column of displayedColumns(); track column.key) {
             <td>
@@ -38,11 +43,32 @@
               }
             </td>
           }
+          @if (config().actions) {
+            <td class="action-cell">
+              @for (button of config().actions!.buttons; track button.action) {
+                <button
+                  type="button"
+                  class="btn btn-sm"
+                  [class]="button.class || 'btn-outline-primary'"
+                  [disabled]="isButtonDisabled(button, item)"
+                  (click)="onAction(button.action, item)"
+                >
+                  @if (isButtonLoading(button, item)) {
+                    <span class="spinner-border spinner-border-sm me-1"></span>
+                  }
+                  @if (button.icon) {
+                    <i [class]="button.icon" [class.me-1]="button.label"></i>
+                  }
+                  {{ button.label }}
+                </button>
+              }
+            </td>
+          }
         </tr>
       }
       @if (data().content.length === 0) {
         <tr>
-          <td [attr.colspan]="displayedColumns().length" class="text-center text-muted">
+          <td [attr.colspan]="displayedColumns().length + (config().actions ? 1 : 0)" class="text-center text-muted">
             No data available
           </td>
         </tr>

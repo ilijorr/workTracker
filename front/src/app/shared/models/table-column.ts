@@ -1,3 +1,12 @@
+export interface ActionButton {
+  label: string;
+  action: string; // event name to emit
+  class?: string; // CSS classes for styling
+  disabled?: (row: any) => boolean; // function to determine if button is disabled
+  loading?: (row: any) => boolean; // function to determine if button is loading
+  icon?: string; // optional icon class
+}
+
 export interface TableColumn {
   key: string;
   label: string;
@@ -17,4 +26,8 @@ export interface TableConfig {
   striped?: boolean;
   bordered?: boolean;
   hover?: boolean;
+  actions?: {
+    buttons: ActionButton[];
+    width?: string; // CSS width for actions column
+  };
 }

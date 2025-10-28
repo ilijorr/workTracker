@@ -89,6 +89,70 @@ export class TableConfigService {
     };
   }
 
+  getVacationTableConfig(): TableConfig {
+    return {
+      columns: [
+        {
+          key: 'employee.username',
+          label: 'Employee',
+          type: 'link',
+          linkConfig: {
+            routePath: '/employee',
+            idField: 'employee.id',
+            displayField: 'employee.username',
+          }
+        },
+        { key: 'startDate', label: 'Start Date', type: 'date' },
+        { key: 'endDate', label: 'End Date', type: 'date' },
+        { key: 'status', label: 'Status', type: 'text' },
+      ],
+      striped: true,
+      hover: true,
+    }
+  }
+
+  getVacationPendingTableConfig(
+    isProcessing: (id: number) => boolean
+  ): TableConfig {
+    return {
+      columns: [
+        {
+          key: 'employee.username',
+          label: 'Employee',
+          type: 'link',
+          linkConfig: {
+            routePath: '/employee',
+            idField: 'employee.id',
+            displayField: 'employee.username',
+          }
+        },
+        { key: 'startDate', label: 'Start Date', type: 'date' },
+        { key: 'endDate', label: 'End Date', type: 'date' },
+      ],
+      actions: {
+        buttons: [
+          {
+            label: 'Approve',
+            action: 'approve',
+            class: 'btn-success',
+            disabled: (row: any) => isProcessing(row.id),
+            loading: (row: any) => isProcessing(row.id)
+          },
+          {
+            label: 'Decline',
+            action: 'decline',
+            class: 'btn-danger',
+            disabled: (row: any) => isProcessing(row.id),
+            loading: (row: any) => isProcessing(row.id)
+          }
+        ],
+        width: '200px'
+      },
+      striped: true,
+      hover: true,
+    }
+  }
+
   getCustomConfig(baseConfigName: string, overrides: Partial<TableConfig>): TableConfig {
     let baseConfig: TableConfig;
 
@@ -101,6 +165,9 @@ export class TableConfigService {
         break;
       case 'project':
         baseConfig = this.getProjectTableConfig();
+        break;
+      case 'vacation':
+        baseConfig = this.getVacationTableConfig();
         break;
       default:
         throw new Error(`Unknown table config: ${baseConfigName}`);
