@@ -24,27 +24,52 @@ export class TableConfigService {
     };
   }
 
+  getWorkEntryTableConfig(): TableConfig {
+    return {
+      columns: [
+        {
+          key: 'username', label: 'Username', type: 'link',
+          linkConfig: {
+            routePath: '/employee',
+            idField: 'employeeId',
+            displayField: 'username',
+          }
+        },
+        {
+          key: 'projectName', label: 'Project Name', type: 'link',
+          linkConfig: {
+            routePath: '/project',
+            idField: 'projectId',
+            displayField: 'projectName',
+          }
+        },
+        {
+          key: 'yearMonth', label: 'Month', type: 'text',
+        },
+        {
+          key: 'hourCount', label: 'Hours', type: 'number',
+        }
+      ],
+      striped: true,
+      hover: true,
+    }
+  }
+
   getProjectTableConfig(): TableConfig {
     return {
       columns: [
         {
           key: 'name',
-          label: 'Project Name',
+          label: 'Name',
           type: 'link',
           linkConfig: {
             routePath: '/project',
             idField: 'id',
             displayField: 'name'
           },
-          sortable: true
         },
-        { key: 'description', label: 'Description' },
-        { key: 'status', label: 'Status', sortable: true },
-        { key: 'startDate', label: 'Start Date', type: 'date', sortable: true },
-        { key: 'endDate', label: 'End Date', type: 'date', sortable: true },
-        { key: 'budget', label: 'Budget', type: 'number' }
+        { key: 'description', label: 'Description', type: 'text' },
       ],
-      excludeFields: ['internalNotes'],
       striped: true,
       hover: true,
       bordered: false
@@ -57,6 +82,9 @@ export class TableConfigService {
     switch (baseConfigName) {
       case 'employee':
         baseConfig = this.getEmployeeTableConfig();
+        break;
+      case 'workEntry':
+        baseConfig = this.getWorkEntryTableConfig();
         break;
       case 'project':
         baseConfig = this.getProjectTableConfig();
