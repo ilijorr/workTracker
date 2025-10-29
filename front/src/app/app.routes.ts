@@ -56,7 +56,7 @@ export const routes: Routes = [
   {
     path: 'project/:id',
     loadComponent: () =>
-      import('./features/project/components/project/project').then(m => m.Project),
+      import('./features/project/components/role-based-project/role-based-project').then(m => m.RoleBasedProject),
     canActivate: [
       authGuard,
     ]
