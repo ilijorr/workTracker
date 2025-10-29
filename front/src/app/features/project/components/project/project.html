@@ -4,7 +4,7 @@
       <p>Loading project details...</p>
     } @else if (project()) {
       <!-- Project Header -->
-      <div class="project-header text-center mb-3">
+      <div class="page-header text-center mb-3">
         <h1>{{ project()!.name }}</h1>
         <div class="project-info">
           <p class="project-description">{{ project()!.description }}</p>
@@ -77,12 +77,12 @@
       @if (isLoadingEmployees()) {
         <p>Loading employees...</p>
       } @else if (availableEmployees() && availableEmployees()!.length > 0) {
-        <div class="employee-list">
+        <div class="selection-list">
           @for (employee of availableEmployees(); track employee.id) {
-            <div class="employee-option"
+            <div class="selection-option"
                  [class.selected]="selectedEmployeeId === employee.id"
                  (click)="selectedEmployeeId = employee.id">
-              <div class="employee-info">
+              <div class="selection-info">
                 <strong>{{ employee.username }}</strong>
               </div>
             </div>

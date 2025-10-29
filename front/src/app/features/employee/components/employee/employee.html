@@ -4,7 +4,7 @@
       <p>Loading employee details...</p>
     } @else if (employee()) {
       <!-- Employee Header -->
-      <div class="employee-header text-center mb-3">
+      <div class="page-header text-center mb-3">
         <h1>{{ employee()!.username }}</h1>
         <div class="employee-stats d-flex justify-content-center gap-4">
           <div class="stat-card vacation-days-card" (click)="openVacationDaysModal()">
@@ -80,12 +80,12 @@
       @if (isLoadingProjects()) {
         <p>Loading projects...</p>
       } @else if (availableProjects() && availableProjects()!.length > 0) {
-        <div class="project-list">
+        <div class="selection-list">
           @for (project of availableProjects(); track project.id) {
-            <div class="project-option"
+            <div class="selection-option"
                  [class.selected]="selectedProjectId === project.id"
                  (click)="selectedProjectId = project.id">
-              <div class="project-info">
+              <div class="selection-info">
                 <strong>{{ project.name }}</strong>
                 <p class="text-muted mb-0">{{ project.description }}</p>
               </div>

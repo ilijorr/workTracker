@@ -1,9 +1,4 @@
-.employee-header {
-  margin-bottom: var(--space-8);
-  padding: var(--space-6);
-  background: var(--bg-secondary);
-  border-radius: var(--radius-lg);
-}
+/* Use global .page-header class instead */
 
 .employee-stats {
   margin-top: var(--space-4);
@@ -41,74 +36,12 @@
   border-color: var(--primary-main);
 }
 
-.assignments-section {
-  margin-top: var(--space-8);
-}
+/* Use global .assignments-section, .no-assignments, .error-message classes instead */
 
-.no-assignments {
-  background: var(--bg-secondary);
-  padding: var(--space-6);
-  border-radius: var(--radius-lg);
-  text-align: center;
-  color: var(--text-secondary);
-}
-
-.error-message {
-  padding: var(--space-8);
-}
-
-/* Project Selection Modal */
-.project-list {
-  max-height: 300px;
-  overflow-y: auto;
-  border: var(--border-width) solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: var(--space-2);
-}
-
-.project-option {
-  padding: var(--space-3);
-  border-radius: var(--radius-sm);
-  margin-bottom: var(--space-2);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: 2px solid transparent;
-}
-
-.project-option:hover {
-  background-color: var(--bg-secondary);
-}
-
-.project-option.selected {
-  background-color: var(--primary-light);
-  border-color: var(--primary-main);
-}
-
-.project-option:last-child {
-  margin-bottom: 0;
-}
-
-.project-info {
-  width: 100%;
-}
-
-.project-info strong {
-  display: block;
-  color: var(--text-primary);
-  margin-bottom: var(--space-1);
-}
-
-.project-info p {
-  font-size: var(--text-sm);
-  line-height: var(--leading-relaxed);
-}
+/* Use global .selection-list, .selection-option, .selection-info classes instead */
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .employee-header {
-    padding: var(--space-4);
-  }
-
   .employee-stats {
     flex-direction: column;
     align-items: center;
@@ -117,13 +50,5 @@
   .stat-card {
     width: 100%;
     max-width: 200px;
-  }
-
-  .project-list {
-    max-height: 250px;
-  }
-
-  .project-info {
-    width: 100%;
   }
 }
