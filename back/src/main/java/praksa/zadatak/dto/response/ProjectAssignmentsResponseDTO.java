@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 import praksa.zadatak.dto.AssignmentWithoutProjectDTO;
 import praksa.zadatak.dto.ProjectDTO;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -15,5 +14,5 @@ import java.util.List;
 @Builder
 public class ProjectAssignmentsResponseDTO {
     ProjectDTO projectDTO;
-    List<AssignmentWithoutProjectDTO> assignmentDTOs;
+    Page<AssignmentWithoutProjectDTO> assignmentDTOs;
 }

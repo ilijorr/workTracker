@@ -22,11 +22,11 @@ public interface AssignmentMapper {
     @Mapping(target = "project", ignore = true)
     Assignment toEntity(CreateAssignmentRequestDTO createAssignmentRequestDTO);
 
-    @Mapping(source = "project", target = "projectDTO")
+    @Mapping(source = "project", target = "project")
     AssignmentWithoutEmployeeDTO toAssignmentWithoutEmployeeDTO(Assignment assignment);
     List<AssignmentWithoutEmployeeDTO> toAssignmentWithoutEmployeeDTOs(List<Assignment> assignments);
 
-    @Mapping(source = "employee", target = "employeeDTO")
+    @Mapping(source = "employee", target = "employee")
     AssignmentWithoutProjectDTO toAssignmentWithoutProjectDTO(Assignment assignment);
     List<AssignmentWithoutProjectDTO> toAssignmentWithoutProjectDTOs(List<Assignment> assignments);
 }

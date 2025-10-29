@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AssignmentWithoutProjectDTO {
-    private EmployeeDTO employeeDTO;
+    private EmployeeDTO employee;
     private float hourRate;
 }

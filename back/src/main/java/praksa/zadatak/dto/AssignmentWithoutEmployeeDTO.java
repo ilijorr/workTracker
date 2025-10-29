@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class AssignmentWithoutEmployeeDTO {
-    private ProjectDTO projectDTO;
+    private ProjectDTO project;
     private float hourRate;
 }

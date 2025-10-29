@@ -3,6 +3,8 @@ package praksa.zadatak.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import praksa.zadatak.dto.AssignmentDTO;
 import praksa.zadatak.dto.request.CreateAssignmentRequestDTO;
@@ -73,24 +75,31 @@ public class AssignmentServiceImpl implements AssignmentService {
         return this.getReference(id);
     }
 
-    public ProjectAssignmentsResponseDTO getAllActiveAssignmentsForProject(Long projectId) {
-        List<Assignment> assignments = assignmentRepository.findByProjectIdAndIsActiveTrue(projectId);
+    public ProjectAssignmentsResponseDTO getAllActiveAssignmentsForProject(
+            Long projectId, Integer page, Integer size) {
+        Page<Assignment> assignments = assignmentRepository.findByProjectIdAndIsActiveTrue(
+                projectId,
+                PageRequest.of(page, size)
+                );
         if (assignments == null || assignments.isEmpty()) { return null; }
         Project project = projectService.getReference(projectId);
         return ProjectAssignmentsResponseDTO.builder()
                 .projectDTO(projectMapper.toDTO(project))
-                .assignmentDTOs(assignmentMapper.toAssignmentWithoutProjectDTOs(assignments))
+                .assignmentDTOs(assignments.map(assignmentMapper::toAssignmentWithoutProjectDTO))
                 .build();
     }
 
-    public EmployeeAssignmentsResponseDTO getAllActiveAssignmentsForEmployee(Long employeeId) {
-        List<Assignment> assignments = assignmentRepository.findByEmployeeIdAndIsActiveTrue(employeeId);
+    public EmployeeAssignmentsResponseDTO getAllActiveAssignmentsForEmployee(
+            Long employeeId, Integer page, Integer size) {
+        Page<Assignment> assignments = assignmentRepository.findByEmployeeIdAndIsActiveTrue(
+                employeeId,
+                PageRequest.of(page, size));
         if (assignments == null || assignments.isEmpty()) { return null; }
         Employee employee = employeeService.get(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("employee", "id", employeeId));
         return EmployeeAssignmentsResponseDTO.builder()
-                .employeeDTO(employeeMapper.toDTO(employee))
-                .assignmentDTOS(assignmentMapper.toAssignmentWithoutEmployeeDTOs(assignments))
+                .employee(employeeMapper.toDTO(employee))
+                .assignments(assignments.map(assignmentMapper::toAssignmentWithoutEmployeeDTO))
                 .build();
     }
 

@@ -19,7 +19,7 @@ public class AssignmentController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<AssignmentDTO> create(
+    public ResponseEntity<AssignmentDTO> assign(
             @RequestBody CreateAssignmentRequestDTO request
             ) {
         return ResponseEntity.ok(
@@ -39,30 +39,36 @@ public class AssignmentController {
     @GetMapping("/employee/{employeeId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<EmployeeAssignmentsResponseDTO> getEmployeeAssignments(
-            @PathVariable Long employeeId
+            @PathVariable Long employeeId,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "100") Integer size
     ) {
         return ResponseEntity.ok(
-                assignmentService.getAllActiveAssignmentsForEmployee(employeeId)
+                assignmentService.getAllActiveAssignmentsForEmployee(employeeId, page, size)
         );
     }
 
     @GetMapping("/me")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<EmployeeAssignmentsResponseDTO> getMyAssignments(
-            @AuthenticationPrincipal String employeeId
+            @AuthenticationPrincipal String employeeId,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "100") Integer size
     ) {
         return ResponseEntity.ok(
-                assignmentService.getAllActiveAssignmentsForEmployee(Long.parseLong(employeeId))
+                assignmentService.getAllActiveAssignmentsForEmployee(Long.parseLong(employeeId), page, size)
         );
     }
 
     @GetMapping("/project/{projectId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProjectAssignmentsResponseDTO> getProjectAssignments(
-            @PathVariable Long projectId
+            @PathVariable Long projectId,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "100") Integer size
     ) {
         return ResponseEntity.ok(
-                assignmentService.getAllActiveAssignmentsForProject(projectId)
+                assignmentService.getAllActiveAssignmentsForProject(projectId, page, size)
         );
     }
 

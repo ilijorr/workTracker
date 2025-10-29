@@ -14,6 +14,6 @@ public interface AssignmentService {
     Assignment getReference(AssignmentId id);
     Assignment getReference(Long employeeId, Long projectId);
 
-    ProjectAssignmentsResponseDTO getAllActiveAssignmentsForProject(Long projectId);
-    EmployeeAssignmentsResponseDTO getAllActiveAssignmentsForEmployee(Long employeeId);
+    ProjectAssignmentsResponseDTO getAllActiveAssignmentsForProject(Long projectId, Integer page, Integer size);
+    EmployeeAssignmentsResponseDTO getAllActiveAssignmentsForEmployee(Long employeeId, Integer page, Integer size);
 }
