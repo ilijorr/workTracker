@@ -13,6 +13,6 @@ import praksa.zadatak.dto.ProjectDTO;
 @AllArgsConstructor
 @Builder
 public class ProjectAssignmentsResponseDTO {
-    ProjectDTO projectDTO;
-    Page<AssignmentWithoutProjectDTO> assignmentDTOs;
+    ProjectDTO project;
+    Page<AssignmentWithoutProjectDTO> assignments;
 }

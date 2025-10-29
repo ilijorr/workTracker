@@ -84,8 +84,8 @@ public class AssignmentServiceImpl implements AssignmentService {
         if (assignments == null || assignments.isEmpty()) { return null; }
         Project project = projectService.getReference(projectId);
         return ProjectAssignmentsResponseDTO.builder()
-                .projectDTO(projectMapper.toDTO(project))
-                .assignmentDTOs(assignments.map(assignmentMapper::toAssignmentWithoutProjectDTO))
+                .project(projectMapper.toDTO(project))
+                .assignments(assignments.map(assignmentMapper::toAssignmentWithoutProjectDTO))
                 .build();
     }
 
