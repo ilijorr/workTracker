@@ -49,6 +49,11 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'error',
+    loadComponent: () =>
+      import('./core/components/error-page/error-page').then(m => m.ErrorPageComponent),
+  },
+  {
     path: 'project/:id',
     loadComponent: () =>
       import('./features/project/components/project/project').then(m => m.Project),

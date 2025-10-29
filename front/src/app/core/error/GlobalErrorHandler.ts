@@ -17,13 +17,19 @@ export class GlobalErrorHandler implements ErrorHandler {
   private handleHttpError(error: HttpErrorResponse): void {
     switch (error.status) {
       case 0:
-        // redirect to default error page
+        console.error('Network error or server unavailable:', error);
+        void this.router.navigate(['/error']);
         break;
       case 401:
+        console.error('Unauthorized access:', error);
         void this.router.navigate(['/login']);
         break;
       case 403:
+        console.error('Forbidden access:', error);
         void this.router.navigate(['/dashboard']);
+        break;
+      default:
+        console.error('HTTP error:', error);
         break;
     }
   }
