@@ -68,6 +68,55 @@ export class TableConfigService {
     }
   }
 
+  getEmployeeWorkEntryTableConfig(): TableConfig {
+    return {
+      columns: [
+        {
+          key: 'assignment.project.name',
+          label: 'Project Name',
+          type: 'link',
+          linkConfig: {
+            routePath: '/project',
+            idField: 'assignment.project.id',
+            displayField: 'assignment.project.name',
+          }
+        },
+        {
+          key: 'yearMonth',
+          label: 'Month',
+          type: 'text',
+        },
+        {
+          key: 'hourCount',
+          label: 'Hours',
+          type: 'number',
+        },
+        {
+          key: 'assignment.hourRate',
+          label: 'Rate',
+          type: 'number',
+        }
+      ],
+      actions: {
+        buttons: [
+          {
+            label: 'Edit',
+            action: 'edit',
+            class: 'btn-primary',
+          },
+          {
+            label: 'Delete',
+            action: 'delete',
+            class: 'btn-danger',
+          }
+        ],
+        width: '150px'
+      },
+      striped: true,
+      hover: true,
+    }
+  }
+
   getProjectTableConfig(): TableConfig {
     return {
       columns: [

@@ -3,6 +3,7 @@ import {NgComponentOutlet} from '@angular/common';
 import {AuthService} from '../../../../core/services/auth-service';
 import {AdminDashboard} from '../admin-dashboard/admin-dashboard';
 import {EmployeeDashboard} from '../employee-dashboard/employee-dashboard';
+import {ErrorPageComponent} from '../../../../core/components/error-page/error-page';
 
 @Component({
   selector: 'app-role-based-dashboard',
@@ -24,9 +25,8 @@ export class RoleBasedDashboard {
       case 'role_employee':
         return EmployeeDashboard;
       default:
-        // TODO: redirect to a fallback page
         console.error(role, " is not supported by the app");
-        return EmployeeDashboard;
+        return ErrorPageComponent;
     }
   }
 
