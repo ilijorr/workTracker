@@ -1,0 +1,129 @@
+.employee-header {
+  margin-bottom: var(--space-8);
+  padding: var(--space-6);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+}
+
+.employee-stats {
+  margin-top: var(--space-4);
+}
+
+.stat-card {
+  background: var(--bg-primary);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  min-width: 120px;
+}
+
+.stat-card h3 {
+  color: var(--primary-main);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  margin-bottom: var(--space-1);
+  line-height: var(--leading-tight);
+}
+
+.stat-card p {
+  font-size: var(--text-sm);
+  margin-bottom: 0;
+}
+
+.vacation-days-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vacation-days-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--primary-main);
+}
+
+.assignments-section {
+  margin-top: var(--space-8);
+}
+
+.no-assignments {
+  background: var(--bg-secondary);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.error-message {
+  padding: var(--space-8);
+}
+
+/* Project Selection Modal */
+.project-list {
+  max-height: 300px;
+  overflow-y: auto;
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+}
+
+.project-option {
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.project-option:hover {
+  background-color: var(--bg-secondary);
+}
+
+.project-option.selected {
+  background-color: var(--primary-light);
+  border-color: var(--primary-main);
+}
+
+.project-option:last-child {
+  margin-bottom: 0;
+}
+
+.project-info {
+  width: 100%;
+}
+
+.project-info strong {
+  display: block;
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.project-info p {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .employee-header {
+    padding: var(--space-4);
+  }
+
+  .employee-stats {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-card {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .project-list {
+    max-height: 250px;
+  }
+
+  .project-info {
+    width: 100%;
+  }
+}
