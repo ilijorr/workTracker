@@ -5,6 +5,13 @@
     <!-- Pending Requests Section -->
     <div class="vacation-section">
       <h2 class="section-header">Pending Requests</h2>
+
+      @if (errorMessage()) {
+        <div class="alert alert-danger">
+          {{ errorMessage() }}
+        </div>
+      }
+
       @if (isLoadingPending()) {
         <p>Loading pending requests...</p>
       } @else {

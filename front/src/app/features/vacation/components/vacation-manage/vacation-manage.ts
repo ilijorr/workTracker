@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpErrorResponse } from '@angular/common/http';
 import { VacationService } from '../../vacation-service';
 import { TableConfigService } from '../../../../shared/services/table-config.service';
 import { DataTableComponent } from '../../../../shared/components/data-table/data-table';
@@ -25,6 +26,7 @@ export class VacationManageComponent implements OnInit {
   isLoadingAll = signal(false);
 
   processingActions = signal<Set<number>>(new Set());
+  errorMessage = signal<string>('');
 
   pendingTableConfig: TableConfig = this.tableConfigService.getVacationPendingTableConfig(
     (id: number) => this.isProcessing(id)
@@ -75,6 +77,8 @@ export class VacationManageComponent implements OnInit {
   }
 
   approveRequest(vacationId: number) {
+    this.errorMessage.set(''); // Clear previous error messages
+
     const currentProcessing = this.processingActions();
     currentProcessing.add(vacationId);
     this.processingActions.set(new Set(currentProcessing));
@@ -90,16 +94,26 @@ export class VacationManageComponent implements OnInit {
         this.loadPendingRequests(0);
         this.loadAllRequests(0);
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         console.error('Failed to approve vacation request:', error);
         const newProcessing = this.processingActions();
         newProcessing.delete(vacationId);
         this.processingActions.set(new Set(newProcessing));
+
+        // Handle specific error status
+        if (error.status === 400) {
+          this.errorMessage.set("The employee doesn't have enough vacation days");
+        } else {
+          // Rethrow other errors to GlobalErrorHandler
+          throw error;
+        }
       }
     });
   }
 
   declineRequest(vacationId: number) {
+    this.errorMessage.set(''); // Clear previous error messages
+
     const currentProcessing = this.processingActions();
     currentProcessing.add(vacationId);
     this.processingActions.set(new Set(currentProcessing));
@@ -115,11 +129,14 @@ export class VacationManageComponent implements OnInit {
         this.loadPendingRequests(0);
         this.loadAllRequests(0);
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         console.error('Failed to decline vacation request:', error);
         const newProcessing = this.processingActions();
         newProcessing.delete(vacationId);
         this.processingActions.set(new Set(newProcessing));
+
+        // Rethrow all errors to GlobalErrorHandler for decline (no special handling needed)
+        throw error;
       }
     });
   }
