@@ -188,6 +188,40 @@ export class TableConfigService {
     }
   }
 
+  getProjectAssignmentTableConfig(
+    isProcessing: (employeeId: number) => boolean
+  ): TableConfig {
+    return {
+      columns: [
+        {
+          key: 'employee.username',
+          label: 'Employee',
+          type: 'link',
+          linkConfig: {
+            routePath: '/employee',
+            idField: 'employee.id',
+            displayField: 'employee.username',
+          }
+        },
+        { key: 'hourRate', label: 'Hour Rate', type: 'number' },
+      ],
+      actions: {
+        buttons: [
+          {
+            label: 'Unassign',
+            action: 'unassign',
+            class: 'btn-danger',
+            disabled: (row: any) => isProcessing(row.employee.id),
+            loading: (row: any) => isProcessing(row.employee.id)
+          }
+        ],
+        width: '120px'
+      },
+      striped: true,
+      hover: true,
+    }
+  }
+
   getCustomConfig(baseConfigName: string, overrides: Partial<TableConfig>): TableConfig {
     let baseConfig: TableConfig;
 
