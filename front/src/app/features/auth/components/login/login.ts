@@ -47,12 +47,11 @@ export class Login {
       error: (error: HttpErrorResponse) => {
         this.isLoading = false;
         console.error(error.message);
+
         if (error.status === 401 || error.status === 403) {
           this.errorMessage = "Username or password is incorrect";
-        } else if (error.status === 0) {
-          this.errorMessage = "Unable to connect to the server";
         } else {
-          this.errorMessage = "Unexpected error occurred";
+          throw error;
         }
       }
     })
