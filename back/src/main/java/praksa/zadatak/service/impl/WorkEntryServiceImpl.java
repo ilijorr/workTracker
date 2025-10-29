@@ -7,10 +7,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import praksa.zadatak.dto.EmployeeDTO;
+import praksa.zadatak.dto.ProjectDTO;
 import praksa.zadatak.dto.request.CreateWorkEntryRequestDTO;
 import praksa.zadatak.dto.request.UpdateWorkEntryRequestDTO;
 import praksa.zadatak.dto.WorkEntryDTO;
+import praksa.zadatak.dto.response.EmployeeWorkEntriesResponseDTO;
+import praksa.zadatak.dto.response.ProjectWorkEntriesResponseDTO;
 import praksa.zadatak.exception.ResourceNotFoundException;
 import praksa.zadatak.mapper.WorkEntryMapper;
 import praksa.zadatak.model.AssignmentId;
@@ -18,6 +23,8 @@ import praksa.zadatak.model.WorkEntry;
 import praksa.zadatak.model.WorkEntryId;
 import praksa.zadatak.repository.WorkEntryRepository;
 import praksa.zadatak.service.AssignmentService;
+import praksa.zadatak.service.EmployeeService;
+import praksa.zadatak.service.ProjectService;
 import praksa.zadatak.service.WorkEntryService;
 
 import java.time.YearMonth;
@@ -31,6 +38,8 @@ public class WorkEntryServiceImpl implements WorkEntryService {
     private final WorkEntryMapper workEntryMapper;
 
     private final AssignmentService assignmentService;
+    private final EmployeeService employeeService;
+    private final ProjectService projectService;
 
     @Transactional
     public WorkEntryDTO create(
@@ -92,19 +101,39 @@ public class WorkEntryServiceImpl implements WorkEntryService {
         return workEntries.map(workEntryMapper::toDTO);
     }
 
-    public List<WorkEntryDTO> getByEmployee(Long employeeId, YearMonth yearMonth) {
-        List<WorkEntry> workEntries = (yearMonth == null) ?
-                workEntryRepository.findByAssignment_EmployeeId(employeeId) :
-                workEntryRepository.findByAssignment_EmployeeIdAndYearMonth(employeeId, yearMonth.toString());
+    public EmployeeWorkEntriesResponseDTO getByEmployee(
+            Long employeeId, YearMonth yearMonth, Integer page, Integer size) {
+        EmployeeDTO employee = employeeService.getDTO(employeeId);
 
-        return workEntryMapper.toDTOs(workEntries);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<WorkEntry> workEntries = (yearMonth == null) ?
+                workEntryRepository.findByAssignment_EmployeeId(
+                        employeeId, pageable) :
+                workEntryRepository.findByAssignment_EmployeeIdAndYearMonth(
+                        employeeId, yearMonth.toString(), pageable);
+
+        return EmployeeWorkEntriesResponseDTO.builder()
+                .employee(employee)
+                .workEntries(workEntries
+                        .map(workEntryMapper::toWorkEntryWithoutEmployeeDTO))
+                .build();
     }
 
-    public List<WorkEntryDTO> getByProject(Long projectId, YearMonth yearMonth) {
-        List<WorkEntry> workEntries = (yearMonth == null) ?
-                workEntryRepository.findByAssignment_ProjectId(projectId) :
-                workEntryRepository.findByAssignment_ProjectIdAndYearMonth(projectId, yearMonth.toString());
+    public ProjectWorkEntriesResponseDTO getByProject(
+            Long projectId, YearMonth yearMonth, Integer page, Integer size) {
+        ProjectDTO project = projectService.get(projectId);
 
-        return workEntryMapper.toDTOs(workEntries);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<WorkEntry> workEntries = (yearMonth == null) ?
+                workEntryRepository.findByAssignment_ProjectId(
+                        projectId, pageable) :
+                workEntryRepository.findByAssignment_ProjectIdAndYearMonth(
+                        projectId, yearMonth.toString(), pageable);
+
+        return ProjectWorkEntriesResponseDTO.builder()
+                .project(project)
+                .workEntries(workEntries
+                        .map(workEntryMapper::toWorkEntryWithoutProjectDTO))
+                .build();
     }
 }

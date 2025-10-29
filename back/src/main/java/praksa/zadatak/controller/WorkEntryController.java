@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.request.CreateWorkEntryRequestDTO;
 import praksa.zadatak.dto.request.UpdateWorkEntryRequestDTO;
 import praksa.zadatak.dto.WorkEntryDTO;
+import praksa.zadatak.dto.response.EmployeeWorkEntriesResponseDTO;
+import praksa.zadatak.dto.response.ProjectWorkEntriesResponseDTO;
 import praksa.zadatak.service.WorkEntryService;
 
 import java.time.YearMonth;
@@ -70,34 +72,41 @@ public class WorkEntryController {
 
     @GetMapping("/employee/{employeeId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<WorkEntryDTO>> getByMonthForEmployee(
+    public ResponseEntity<EmployeeWorkEntriesResponseDTO> getByMonthForEmployee(
             @PathVariable Long employeeId,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "100") Integer size
     ) {
         return ResponseEntity.ok(
-                workEntryService.getByEmployee(employeeId, yearMonth)
+                workEntryService.getByEmployee(employeeId, yearMonth, page, size)
         );
     }
 
     @GetMapping("/project/{projectId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<WorkEntryDTO>> getByMonthForProject(
+    public ResponseEntity<ProjectWorkEntriesResponseDTO> getByMonthForProject(
             @PathVariable Long projectId,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "100") Integer size
     ) {
         return ResponseEntity.ok(
-                workEntryService.getByProject(projectId, yearMonth)
+                workEntryService.getByProject(projectId, yearMonth, page, size)
         );
     }
 
     @GetMapping("/me")
     @PreAuthorize("hasRole('EMPLOYEE')")
-    public ResponseEntity<List<WorkEntryDTO>> getMyWorkEntries(
+    public ResponseEntity<EmployeeWorkEntriesResponseDTO> getMyWorkEntries(
             @AuthenticationPrincipal String employeeId,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "100") Integer size
     ) {
         return ResponseEntity.ok(
-                workEntryService.getByEmployee(Long.parseLong(employeeId), yearMonth)
+                workEntryService.getByEmployee(
+                        Long.parseLong(employeeId), yearMonth, page, size)
         );
     }
 

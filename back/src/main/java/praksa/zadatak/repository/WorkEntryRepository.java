@@ -11,8 +11,20 @@ import java.util.List;
 public interface WorkEntryRepository extends JpaRepository<WorkEntry, WorkEntryId> {
     List<WorkEntry> findByYearMonth(String yearMonth);
     Page<WorkEntry> findByYearMonth(String yearMonth, Pageable pageable);
+
     List<WorkEntry> findByAssignment_EmployeeId(Long employeeId);
-    List<WorkEntry> findByAssignment_EmployeeIdAndYearMonth(Long employeeId, String yearMonth);
+    Page<WorkEntry> findByAssignment_EmployeeId(Long employeeId, Pageable pageable);
+    
+    List<WorkEntry> findByAssignment_EmployeeIdAndYearMonth(
+            Long employeeId, String yearMonth);
+    Page<WorkEntry> findByAssignment_EmployeeIdAndYearMonth(
+            Long employeeId, String yearMonth, Pageable pageable);
+
     List<WorkEntry> findByAssignment_ProjectId(Long projectId);
-    List<WorkEntry> findByAssignment_ProjectIdAndYearMonth(Long projectId, String yearMonth);
+    Page<WorkEntry> findByAssignment_ProjectId(Long projectId, Pageable pageable);
+
+    List<WorkEntry> findByAssignment_ProjectIdAndYearMonth(
+            Long projectId, String yearMonth);
+    Page<WorkEntry> findByAssignment_ProjectIdAndYearMonth(
+            Long projectId, String yearMonth, Pageable pageable);
 }
