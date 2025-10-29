@@ -50,12 +50,13 @@ export class AdminDashboard implements OnInit {
     this.employeeService.getAll(page, 100).subscribe({
       next: (pageResponse: PageResponse<Employee>) => {
         this.employeeData.set(pageResponse);
+        this.isLoadingEmployees.set(false);
       },
       error: error => {
-        console.log(error);
+        this.isLoadingEmployees.set(false);
+        throw error;
       }
     })
-    this.isLoadingEmployees.set(false);
   }
 
   loadProjects(page: number) {
@@ -64,12 +65,13 @@ export class AdminDashboard implements OnInit {
     this.projectService.getAll(page, 100).subscribe({
       next: (pageResponse: PageResponse<Project>) => {
         this.projectData.set(pageResponse);
+        this.isLoadingProjects.set(false);
       },
       error: error => {
-        console.log(error);
+        this.isLoadingProjects.set(false);
+        throw error;
       }
     })
-    this.isLoadingProjects.set(false);
   }
 
   loadWorkEntries(page: number) {
@@ -83,14 +85,14 @@ export class AdminDashboard implements OnInit {
 
     this.workEntryService.getForYearMonth(currentYearMonth, page, 100).subscribe({
       next: (pageResponse: PageResponse<WorkEntry>) => {
-        console.log(pageResponse);
         this.workEntryData.set(pageResponse);
+        this.isLoadingWorkEntries.set(false);
       },
       error: error => {
-        console.log(error);
+        this.isLoadingWorkEntries.set(false);
+        throw error;
       }
     });
-    this.isLoadingWorkEntries.set(false);
   }
 
   ngOnInit() {
