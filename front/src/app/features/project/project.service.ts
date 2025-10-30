@@ -4,6 +4,7 @@ import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import {PageResponse} from '../../models/response/PageResponse';
 import {Project} from '../../models/Project';
+import {CreateProjectRequest} from '../../models/request/CreateProjectRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,9 @@ export class ProjectService {
 
   get(id: number): Observable<Project> {
     return this.http.get<Project>(`${this.apiUrl}/${id}`);
+  }
+
+  create(request: CreateProjectRequest): Observable<Project> {
+    return this.http.post<Project>(this.apiUrl, request);
   }
 }
