@@ -82,6 +82,18 @@ public class VacationController {
         );
     }
 
+    @GetMapping("/me")
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    public ResponseEntity<Page<VacationDTO>> getMy(
+            @AuthenticationPrincipal String employeeId,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "100") Integer size
+    ) {
+        return ResponseEntity.ok(
+                vacationService.getByEmployee(Long.parseLong(employeeId), page, size)
+        );
+    }
+
     @DeleteMapping("/{vacationId}")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<Void> delete(
