@@ -4,6 +4,7 @@ import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import {PageResponse} from '../../models/response/PageResponse';
 import {Vacation} from '../../models/Vacation';
+import {CreateVacationRequest} from '../../models/request/CreateVacationRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,17 @@ export class VacationService {
       .set('size', size);
     return this.http.get<PageResponse<Vacation>>(
       `${this.apiUrl}/pending`, {params: params}
+    );
+  }
+
+  getMy(
+    page: number = 0, size: number = 100
+  ): Observable<PageResponse<Vacation>> {
+    const params = new HttpParams()
+      .set('page', page)
+      .set('size', size);
+    return this.http.get<PageResponse<Vacation>>(
+      `${this.apiUrl}/me`, {params: params}
     );
   }
 
@@ -40,6 +52,14 @@ export class VacationService {
 
   decline(id: number): Observable<Vacation> {
     return this.http.patch<Vacation>(`${this.apiUrl}/decline/${id}`, null)
+  }
+
+  create(request: CreateVacationRequest): Observable<Vacation> {
+    return this.http.post<Vacation>(this.apiUrl, request)
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`)
   }
 
 }
