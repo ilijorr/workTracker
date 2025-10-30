@@ -9,6 +9,8 @@ import praksa.zadatak.model.AssignmentId;
 import java.util.List;
 
 public interface AssignmentRepository extends JpaRepository<Assignment, AssignmentId> {
+    Boolean existsByEmployeeIdAndProjectIdAndIsActiveTrue(Long employeeId, Long projectId);
+
     List<Assignment> findByEmployeeIdAndIsActiveTrue(Long employeeId);
     Page<Assignment> findByEmployeeIdAndIsActiveTrue(Long employeeId, Pageable pageable);
     List<Assignment> findByProjectIdAndIsActiveTrue(Long projectId);
