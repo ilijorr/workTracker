@@ -4,6 +4,7 @@ import {authGuard} from './core/guards/auth-guard';
 import {inject} from '@angular/core';
 import {AuthService} from './core/services/auth-service';
 import {adminGuard} from './core/guards/admin-guard';
+import {employeeGuard} from './core/guards/employee-guard';
 
 // TODO: feature specific routing files
 
@@ -46,6 +47,14 @@ export const routes: Routes = [
       import('./features/vacation/components/vacation-manage/vacation-manage').then(m => m.VacationManageComponent),
     canActivate: [
       adminGuard
+    ],
+  },
+  {
+    path: 'vacation',
+    loadComponent: () =>
+      import('./features/vacation/components/vacation-employee/vacation-employee').then(m => m.VacationEmployeeComponent),
+    canActivate: [
+      employeeGuard
     ],
   },
   {
