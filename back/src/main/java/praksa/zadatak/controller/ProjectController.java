@@ -31,7 +31,7 @@ public class ProjectController {
     }
 
     @GetMapping
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<ProjectDTO>> get(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "100") Integer size
