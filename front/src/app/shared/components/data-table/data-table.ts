@@ -82,4 +82,8 @@ export class DataTableComponent<T> {
   isButtonLoading(button: ActionButton, row: T): boolean {
     return button.loading ? button.loading(row) : false;
   }
+
+  isButtonHidden(button: ActionButton, row: T): boolean {
+    return button.hidden ? button.hidden(row) : false;
+  }
 }

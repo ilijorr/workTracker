@@ -4,6 +4,7 @@ export interface ActionButton {
   class?: string; // CSS classes for styling
   disabled?: (row: any) => boolean; // function to determine if button is disabled
   loading?: (row: any) => boolean; // function to determine if button is loading
+  hidden?: (row: any) => boolean; // function to determine if button is hidden
   icon?: string; // optional icon class
 }
 
