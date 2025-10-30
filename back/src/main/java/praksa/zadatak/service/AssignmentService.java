@@ -11,6 +11,8 @@ public interface AssignmentService {
     AssignmentDTO assign(CreateAssignmentRequestDTO request);
     Boolean unassign(Long employeeId, Long projectId);
 
+    Boolean isAssignedTo(Long employeeId, Long projectId);
+
     Assignment getReference(AssignmentId id);
     Assignment getReference(Long employeeId, Long projectId);
 

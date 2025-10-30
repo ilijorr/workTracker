@@ -24,8 +24,6 @@ import praksa.zadatak.service.AssignmentService;
 import praksa.zadatak.service.EmployeeService;
 import praksa.zadatak.service.ProjectService;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class AssignmentServiceImpl implements AssignmentService {
@@ -64,6 +62,10 @@ public class AssignmentServiceImpl implements AssignmentService {
         } catch (EntityNotFoundException ex) {
             throw new ResourceNotFoundException("Assignment", "id", id);
         }
+    }
+
+    public Boolean isAssignedTo(Long employeeId, Long projectId) {
+        return assignmentRepository.existsByEmployeeIdAndProjectIdAndIsActiveTrue(employeeId, projectId);
     }
 
     public Assignment getReference(AssignmentId id) {
