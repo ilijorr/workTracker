@@ -2,6 +2,8 @@ package praksa.zadatak.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotNull;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,6 +27,7 @@ public class GlobalExceptionHandler {
             ResourceNotFoundException.class,      HttpStatus.NOT_FOUND,
             UsernameTakenException.class,         HttpStatus.CONFLICT
     );
+    private static final Logger log = LogManager.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(
@@ -45,6 +48,7 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(
                 status.value(), exception.getMessage(), request.getRequestURI()
         );
+        log.error(errorResponse);
         return new ResponseEntity<>(errorResponse, status);
     }
 
