@@ -4,10 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import praksa.zadatak.dto.request.CreateProjectRequestDTO;
 import praksa.zadatak.dto.ProjectDTO;
 import praksa.zadatak.service.ProjectService;
+
+import java.util.Collection;
 
 @RequiredArgsConstructor
 @RestController
@@ -39,10 +44,16 @@ public class ProjectController {
     @GetMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ProjectDTO> get(
+            @AuthenticationPrincipal String userId,
+            Authentication authentication,
             @PathVariable("id") Long id
     ) {
+        Collection<? extends GrantedAuthority> authorities =
+                authentication.getAuthorities();
+        boolean isAdmin = authorities.stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
         return ResponseEntity.ok(
-                projectService.get(id)
+                projectService.getWithAuthorization(id, Long.parseLong(userId), isAdmin)
         );
     }
 }

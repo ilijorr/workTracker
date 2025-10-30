@@ -11,6 +11,7 @@ public interface ProjectService {
     ProjectDTO create(CreateProjectRequestDTO request);
 
     Page<ProjectDTO> get(Integer page, Integer size);
+    ProjectDTO getWithAuthorization(Long id, Long userId, boolean isAdmin);
     ProjectDTO get(Long id);
     Project getReference(Long id);
 
