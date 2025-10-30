@@ -1,0 +1,66 @@
+.projects-section {
+  margin-bottom: var(--space-6);
+}
+
+.project-form {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  position: sticky;
+  top: var(--space-4);
+}
+
+.project-form h3 {
+  color: var(--primary-main);
+  margin-bottom: var(--space-4);
+  border-bottom: 2px solid var(--primary-main);
+  padding-bottom: var(--space-2);
+}
+
+/* Enhanced form styling */
+.project-form .form-label {
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.project-form .form-control,
+.project-form .form-select {
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-form .form-control:focus,
+.project-form .form-select:focus {
+  border-color: var(--primary-main);
+  box-shadow: 0 0 0 0.125rem rgba(42, 157, 143, 0.25);
+}
+
+.project-form .btn {
+  border-radius: var(--radius-md);
+  font-weight: var(--font-medium);
+  transition: all 0.2s ease;
+}
+
+.project-form .btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Responsive design */
+@media (max-width: 992px) {
+  .project-form {
+    position: static;
+    margin-top: var(--space-6);
+  }
+}
+
+@media (max-width: 768px) {
+  .project-form {
+    padding: var(--space-4);
+  }
+
+  .project-form h3 {
+    font-size: var(--text-xl);
+  }
+}

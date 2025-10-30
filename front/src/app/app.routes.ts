@@ -63,6 +63,14 @@ export const routes: Routes = [
       import('./core/components/error-page/error-page').then(m => m.ErrorPageComponent),
   },
   {
+    path: 'project/manage',
+    loadComponent: () =>
+      import('./features/project/components/project-manage/project-manage').then(m => m.ProjectManageComponent),
+    canActivate: [
+      adminGuard
+    ]
+  },
+  {
     path: 'project/:id',
     loadComponent: () =>
       import('./features/project/components/role-based-project/role-based-project').then(m => m.RoleBasedProject),
