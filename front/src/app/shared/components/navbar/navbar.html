@@ -1,15 +1,37 @@
 <nav class="navbar">
   <div class="navbar-container">
-    <div class="navbar-brand">
-      <a routerLink="/dashboard" class="brand-link">
-        <h2>Trekk</h2>
-      </a>
+    <div class="navbar-left">
+      <div class="navbar-brand">
+        <a routerLink="/dashboard" class="brand-link">
+          <h2>Trekk</h2>
+        </a>
+      </div>
+
+      <div class="navbar-navigation">
+        <!-- Admin Navigation -->
+        @if (isAdmin()) {
+          <a routerLink="/employee/manage" routerLinkActive="active" class="navbar-btn primary">
+            Employees
+          </a>
+          <a routerLink="/project/manage" routerLinkActive="active" class="navbar-btn primary">
+            Projects
+          </a>
+          <a routerLink="/vacation/manage" routerLinkActive="active" class="navbar-btn primary">
+            Vacations
+          </a>
+        }
+
+        <!-- Employee Navigation -->
+        @if (isEmployee()) {
+          <a routerLink="/vacation" routerLinkActive="active" class="navbar-btn primary">
+            Vacation
+          </a>
+        }
+      </div>
     </div>
 
-    <div class="navbar-actions">
-      <a routerLink="/dashboard" routerLinkActive="active" class="navbar-btn primary">
-        Dashboard
-      </a>
+    <div class="navbar-right">
+      <!-- Logout Button (always on the right) -->
       <button (click)="logout()" class="navbar-btn danger">
         Logout
       </button>

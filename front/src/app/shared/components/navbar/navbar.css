@@ -16,6 +16,23 @@
   height: 40px;
 }
 
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.navbar-navigation {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
 .navbar-brand .brand-link {
   text-decoration: none;
   color: var(--text-primary);
@@ -92,7 +109,11 @@
     padding: 0 var(--space-2);
   }
 
-  .navbar-actions {
+  .navbar-left {
+    gap: var(--space-4);
+  }
+
+  .navbar-navigation {
     gap: var(--space-2);
   }
 

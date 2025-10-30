@@ -17,4 +17,12 @@ export class NavbarComponent {
     this.authService.logout();
     void this.router.navigate(['/']);
   }
+
+  isAdmin(): boolean {
+    return this.authService.getUserRole()?.toLowerCase() === 'role_admin';
+  }
+
+  isEmployee(): boolean {
+    return this.authService.getUserRole()?.toLowerCase() === 'role_employee';
+  }
 }
