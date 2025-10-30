@@ -1,6 +1,8 @@
 package praksa.zadatak.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import java.time.YearMonth;
 @RestController
 @RequestMapping("api/work")
 public class WorkEntryController {
+    private static final Logger log = LogManager.getLogger(WorkEntryController.class);
     private final WorkEntryService workEntryService;
 
     @PostMapping
@@ -97,7 +100,7 @@ public class WorkEntryController {
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<EmployeeWorkEntriesResponseDTO> getMyWorkEntries(
             @AuthenticationPrincipal String employeeId,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth,
+            @RequestParam(required = false, name = "year-month") @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "100") Integer size
     ) {
