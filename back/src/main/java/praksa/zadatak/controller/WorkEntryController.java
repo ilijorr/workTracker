@@ -15,7 +15,6 @@ import praksa.zadatak.dto.response.ProjectWorkEntriesResponseDTO;
 import praksa.zadatak.service.WorkEntryService;
 
 import java.time.YearMonth;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -67,8 +66,6 @@ public class WorkEntryController {
                 workEntryService.getByYearMonth(yearMonth, page, size)
         );
     }
-
-    // TODO: change the response to only send the employee/project data once, and exclude it from the rest of assignments
 
     @GetMapping("/employee/{employeeId}")
     @PreAuthorize("hasRole('ADMIN')")
