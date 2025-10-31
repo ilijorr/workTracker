@@ -1,0 +1,49 @@
+<div class="page-container">
+  <div class="page-content">
+    <h1>Admin Dashboard</h1>
+
+    <div class="dashboard-grid">
+      <div class="dashboard-section">
+        <h2 class="section-header">Employees</h2>
+        @if (isLoadingEmployees()) {
+          <p>Loading employees...</p>
+        } @else {
+          <app-data-table
+            [data]="employeeData()"
+            [config]="employeeTableConfig"
+            (pageChange)="loadEmployees($event)"
+            (sort)="onSort($event)"
+          />
+        }
+      </div>
+
+      <div class="dashboard-section">
+        <h2 class="section-header">Projects</h2>
+        @if (isLoadingProjects()) {
+          <p>Loading projects...</p>
+        } @else {
+          <app-data-table
+            [data]="projectData()"
+            [config]="projectTableConfig"
+            (pageChange)="loadProjects($event)"
+            (sort)="onSort($event)"
+          />
+        }
+      </div>
+
+      <div class="dashboard-section dashboard-section-full">
+        <h2 class="section-header">Work Entries (Current Month)</h2>
+        @if (isLoadingWorkEntries()) {
+          <p>Loading work entries...</p>
+        } @else {
+          <app-data-table
+            [data]="workEntryData()"
+            [config]="workEntryTableConfig"
+            (pageChange)="loadWorkEntries($event)"
+            (sort)="onSort($event)"
+          />
+        }
+      </div>
+    </div>
+  </div>
+</div>

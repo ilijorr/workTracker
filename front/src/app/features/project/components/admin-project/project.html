@@ -1,0 +1,120 @@
+<div class="page-container">
+  <div class="page-content">
+    @if (isLoading()) {
+      <p>Loading project details...</p>
+    } @else if (project()) {
+      <!-- Project Header -->
+      <div class="page-header text-center mb-3">
+        <h1>{{ project()!.name }}</h1>
+        <div class="project-info">
+          <p class="project-description">{{ project()!.description }}</p>
+        </div>
+      </div>
+
+      <!-- Assignments Section -->
+      <div class="assignments-section">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="section-header mb-0">Employee Assignments</h2>
+          <button type="button" class="btn btn-primary" (click)="openAssignModal()">
+            Assign Employee
+          </button>
+        </div>
+
+        @if (isLoadingAssignments()) {
+          <p>Loading assignments...</p>
+        } @else if (projectAssignments()) {
+          @if (projectAssignments()!.content.length === 0) {
+            <div class="no-assignments">
+              <p>No employees are assigned to this project.</p>
+            </div>
+          } @else {
+            <app-data-table
+              [data]="projectAssignments()!"
+              [config]="assignmentTableConfig"
+              (action)="onTableAction($event)"
+            />
+          }
+        } @else {
+          <div class="no-assignments">
+            <p>No employees are assigned to this project.</p>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="error-message text-center">
+        <h2>Project not found</h2>
+        <p class="text-muted">The requested project could not be loaded.</p>
+      </div>
+    }
+  </div>
+</div>
+
+<!-- Unassign Confirmation Modal -->
+<ng-template #unassignModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Confirm Unassignment</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to unassign <strong>{{ selectedAssignment?.employee?.username }}</strong> from project <strong>{{ project()?.name }}</strong>?</p>
+    <p class="text-muted">This action cannot be undone.</p>
+  </div>
+  <div class="modal-footer d-flex justify-content-between">
+    <button type="button" class="btn btn-outline-primary" (click)="modal.dismiss()">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('confirm')">Unassign</button>
+  </div>
+</ng-template>
+
+<!-- Assign Employee Modal -->
+<ng-template #assignModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Assign Employee</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <div class="mb-3">
+      <label class="form-label">Employee</label>
+      @if (isLoadingEmployees()) {
+        <p>Loading employees...</p>
+      } @else if (availableEmployees() && availableEmployees()!.length > 0) {
+        <div class="selection-list">
+          @for (employee of availableEmployees(); track employee.id) {
+            <div class="selection-option"
+                 [class.selected]="selectedEmployeeId === employee.id"
+                 (click)="selectedEmployeeId = employee.id">
+              <div class="selection-info">
+                <strong>{{ employee.username }}</strong>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="text-muted">No available employees to assign.</p>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label for="hourRate" class="form-label">Hour Rate</label>
+      <input type="number" class="form-control" id="hourRate"
+             [(ngModel)]="assignmentHourRate" min="0" step="0.01"
+             placeholder="Enter hour rate"
+             [class.is-invalid]="assignmentHourRate !== null && assignmentHourRate < 0">
+      @if (assignmentHourRate !== null && assignmentHourRate < 0) {
+        <div class="invalid-feedback">
+          Hour rate must be greater than or equal to 0.
+        </div>
+      }
+    </div>
+  </div>
+  <div class="modal-footer d-flex justify-content-between">
+    <button type="button" class="btn btn-outline-primary" (click)="modal.dismiss()">Cancel</button>
+    <button type="button" class="btn btn-primary"
+            [disabled]="!selectedEmployeeId || !assignmentHourRate || assignmentHourRate < 0 || isAssigning()"
+            (click)="modal.close('confirm')">
+      @if (isAssigning()) {
+        <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+      }
+      Assign
+    </button>
+  </div>
+</ng-template>

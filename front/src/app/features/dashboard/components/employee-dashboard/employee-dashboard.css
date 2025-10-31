@@ -1,0 +1,112 @@
+.work-entries-section {
+  margin-bottom: var(--space-6);
+}
+
+.work-entry-form {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  position: sticky;
+  top: var(--space-4);
+}
+
+.work-entry-form h3 {
+  color: var(--primary-main);
+  margin-bottom: var(--space-4);
+  border-bottom: 2px solid var(--primary-light);
+  padding-bottom: var(--space-2);
+}
+
+.form-select-sm {
+  font-size: var(--text-sm);
+  padding: var(--space-1) var(--space-2);
+  min-width: 80px;
+}
+
+/* Table filter styling */
+.d-flex.gap-2 label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.d-flex.gap-2 .form-select-sm {
+  padding: var(--space-2) var(--space-3);
+  font-weight: var(--font-medium);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-primary);
+}
+
+/* Enhanced form styling */
+.work-entry-form .form-label {
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.work-entry-form .form-select,
+.work-entry-form .form-control {
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.work-entry-form .form-select:focus,
+.work-entry-form .form-control:focus {
+  border-color: var(--primary-main);
+  box-shadow: 0 0 0 0.125rem rgba(var(--primary-rgb), 0.25);
+}
+
+.work-entry-form .btn {
+  border-radius: var(--radius-md);
+  font-weight: var(--font-medium);
+  transition: all 0.2s ease;
+}
+
+.work-entry-form .btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Modal delete list styling */
+.modal-body ul {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  border-left: 4px solid var(--danger);
+}
+
+.modal-body ul li {
+  margin-bottom: var(--space-1);
+}
+
+.modal-body ul li:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive design */
+@media (max-width: 992px) {
+  .work-entry-form {
+    position: static;
+    margin-top: var(--space-6);
+  }
+}
+
+@media (max-width: 768px) {
+  .d-flex.gap-2 {
+    flex-direction: column;
+    gap: var(--space-2) !important;
+  }
+
+  .d-flex.gap-2 label {
+    margin-bottom: 0;
+  }
+
+  .work-entry-form {
+    padding: var(--space-4);
+  }
+
+  .work-entry-form h3 {
+    font-size: var(--text-xl);
+  }
+}

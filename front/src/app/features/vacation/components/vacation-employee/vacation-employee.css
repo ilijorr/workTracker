@@ -1,0 +1,119 @@
+.vacation-requests-section {
+  margin-bottom: var(--space-6);
+}
+
+.vacation-request-form {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  position: sticky;
+  top: var(--space-4);
+}
+
+.vacation-request-form h3 {
+  color: var(--primary-main);
+  margin-bottom: var(--space-4);
+  border-bottom: 2px solid var(--primary-main);
+  padding-bottom: var(--space-2);
+}
+
+/* Enhanced form styling */
+.vacation-request-form .form-label {
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.vacation-request-form .form-control {
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vacation-request-form .form-control:focus {
+  border-color: var(--primary-main);
+  box-shadow: 0 0 0 0.125rem rgba(42, 157, 143, 0.25);
+}
+
+.vacation-request-form .btn {
+  border-radius: var(--radius-md);
+  font-weight: var(--font-medium);
+  transition: all 0.2s ease;
+}
+
+.vacation-request-form .btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Modal delete list styling */
+.modal-body ul {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-6);
+  border-left: 4px solid var(--error);
+  margin-left: 0;
+}
+
+.modal-body ul li {
+  margin-bottom: var(--space-1);
+}
+
+.modal-body ul li:last-child {
+  margin-bottom: 0;
+}
+
+/* Date range picker styling */
+.dp-hidden {
+  width: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  line-height: 1.6;
+}
+
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+
+.custom-day.range,
+.custom-day:hover {
+  background-color: var(--primary-main);
+  color: var(--white);
+}
+
+.custom-day.faded {
+  background-color: rgba(42, 157, 143, 0.5);
+}
+
+
+/* Responsive design */
+@media (max-width: 992px) {
+  .vacation-request-form {
+    position: static;
+    margin-top: var(--space-6);
+  }
+}
+
+@media (max-width: 768px) {
+  .vacation-request-form {
+    padding: var(--space-4);
+  }
+
+  .vacation-request-form h3 {
+    font-size: var(--text-xl);
+  }
+
+  ngb-datepicker {
+    transform: scale(0.9);
+    transform-origin: top left;
+  }
+}

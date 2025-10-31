@@ -1,0 +1,109 @@
+<div class="table-container">
+  <table
+    class="table"
+    [class.table-striped]="config().striped"
+    [class.table-bordered]="config().bordered"
+    [class.table-hover]="config().hover"
+  >
+    <thead class="table-dark">
+      <tr>
+        @for (column of displayedColumns(); track column.key) {
+          <th
+            scope="col"
+            [class.sortable]="column.sortable"
+            (click)="onSort(column)"
+          >
+            {{ column.label }}
+            @if (column.sortable) {
+              <i class="sort-icon">↕</i>
+            }
+          </th>
+        }
+        @if (config().actions) {
+          <th scope="col" [style.width]="config().actions?.width || 'auto'">
+            Actions
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of data().content; track $index) {
+        <tr>
+          @for (column of displayedColumns(); track column.key) {
+            <td>
+              @if (column.type === 'link' && column.linkConfig) {
+                <a
+                  [routerLink]="getLinkPath(item, column)"
+                  class="table-link"
+                >
+                  {{ getLinkText(item, column) }}
+                </a>
+              } @else {
+                {{ formatValue(getCellValue(item, column), column.type || 'text') }}
+              }
+            </td>
+          }
+          @if (config().actions) {
+            <td class="action-cell">
+              @for (button of config().actions!.buttons; track button.action) {
+                @if (!isButtonHidden(button, item)) {
+                  <button
+                    type="button"
+                    class="btn btn-sm"
+                    [class]="button.class || 'btn-outline-primary'"
+                    [disabled]="isButtonDisabled(button, item)"
+                    (click)="onAction(button.action, item)"
+                  >
+                    @if (isButtonLoading(button, item)) {
+                      <span class="spinner-border spinner-border-sm me-1"></span>
+                    }
+                    @if (button.icon) {
+                      <i [class]="button.icon" [class.me-1]="button.label"></i>
+                    }
+                    {{ button.label }}
+                  </button>
+                }
+              }
+            </td>
+          }
+        </tr>
+      }
+      @if (data().content.length === 0) {
+        <tr>
+          <td [attr.colspan]="displayedColumns().length + (config().actions ? 1 : 0)" class="text-center text-muted">
+            No data available
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <nav aria-label="Table pagination" class="d-flex justify-content-between align-items-center mt-3">
+    <div class="pagination-info">
+      Showing {{ data().content.length }} of {{ data().totalElements }} entries
+    </div>
+
+    <div class="pagination-controls">
+      <button
+        class="btn btn-outline-primary btn-sm me-2"
+        [disabled]="data().first"
+        (click)="onPageChange(data().number - 1)"
+      >
+        Previous
+      </button>
+
+      <span class="pagination-current">
+        Page {{ data().number + 1 }} of {{ data().totalPages }}
+      </span>
+
+      <button
+        class="btn btn-outline-primary btn-sm ms-2"
+        [disabled]="data().last"
+        (click)="onPageChange(data().number + 1)"
+      >
+        Next
+      </button>
+    </div>
+  </nav>
+</div>

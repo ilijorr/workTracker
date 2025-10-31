@@ -1,0 +1,183 @@
+<div class="page-container">
+  <div class="page-content">
+    <div class="row">
+      <!-- Left Side: Work Entries Table -->
+      <div class="col-lg-8">
+        <div class="work-entries-section">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="section-header mb-0">My Work Entries</h2>
+
+            <!-- Year-Month Filter -->
+            <div class="d-flex gap-2 align-items-center">
+              <label class="form-label mb-0">Filter:</label>
+              <select class="form-select form-select-sm" [(ngModel)]="formYear" (change)="onYearMonthChange()">
+                @for (year of [2023, 2024, 2025]; track year) {
+                  <option [value]="year">{{ year }}</option>
+                }
+              </select>
+              <select class="form-select form-select-sm" [(ngModel)]="formMonth" (change)="onYearMonthChange()">
+                @for (month of [1,2,3,4,5,6,7,8,9,10,11,12]; track month) {
+                  <option [value]="month">{{ month.toString().padStart(2, '0') }}</option>
+                }
+              </select>
+            </div>
+          </div>
+
+          @if (isLoadingWorkEntries()) {
+            <p>Loading work entries...</p>
+          } @else if (workEntries()) {
+            @if (workEntries()!.content.length === 0) {
+              <div class="no-assignments">
+                <p>No work entries found for {{ selectedYearMonth() }}.</p>
+              </div>
+            } @else {
+              <app-data-table
+                [data]="workEntries()!"
+                [config]="workEntryTableConfig"
+                (action)="onTableAction($event)"
+              />
+            }
+          } @else {
+            <div class="no-assignments">
+              <p>No work entries found.</p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Right Side: Work Entry Form -->
+      <div class="col-lg-4">
+        <div class="work-entry-form">
+          <h3 class="section-header">
+            @if (isEditing) {
+              Edit Work Entry
+            } @else {
+              Add Work Entry
+            }
+          </h3>
+
+          <form (ngSubmit)="submitForm()" #workEntryForm="ngForm">
+            <!-- Project Selection -->
+            <div class="mb-3">
+              <label class="form-label">Project</label>
+              @if (isLoadingAssignments()) {
+                <p class="text-muted">Loading projects...</p>
+              } @else if (myAssignments() && myAssignments()!.content.length > 0) {
+                <select class="form-select" [(ngModel)]="selectedProjectId" name="project" required>
+                  <option [value]="null">Select a project</option>
+                  @for (assignment of myAssignments()!.content; track assignment.project.id) {
+                    <option [value]="assignment.project.id">
+                      {{ assignment.project.name }}
+                    </option>
+                  }
+                </select>
+              } @else {
+                <p class="text-muted">No project assignments found. Contact your administrator.</p>
+              }
+            </div>
+
+            <!-- Year Selection -->
+            <div class="mb-3">
+              <label for="year" class="form-label">Year</label>
+              <select class="form-select" [(ngModel)]="formYear" name="year" id="year" required>
+                @for (year of [2023, 2024, 2025]; track year) {
+                  <option [value]="year">{{ year }}</option>
+                }
+              </select>
+            </div>
+
+            <!-- Month Selection -->
+            <div class="mb-3">
+              <label for="month" class="form-label">Month</label>
+              <select class="form-select" [(ngModel)]="formMonth" name="month" id="month" required>
+                @for (month of [1,2,3,4,5,6,7,8,9,10,11,12]; track month) {
+                  <option [value]="month">
+                    {{ monthNames[month - 1] }}
+                  </option>
+                }
+              </select>
+            </div>
+
+            <!-- Hours Input -->
+            <div class="mb-3">
+              <label for="hours" class="form-label">Hours Worked</label>
+              <input
+                type="number"
+                class="form-control"
+                id="hours"
+                [(ngModel)]="formHours"
+                name="hours"
+                min="1"
+                max="720"
+                step="1"
+                placeholder="Enter hours"
+                required
+                [class.is-invalid]="formHours !== null && (formHours <= 0 || formHours > 720 || formHours % 1 !== 0)">
+              @if (formHours !== null && formHours <= 0) {
+                <div class="invalid-feedback">
+                  Hours must be greater than 0.
+                </div>
+              }
+              @if (formHours !== null && formHours > 720) {
+                <div class="invalid-feedback">
+                  Hours cannot exceed 720 per month.
+                </div>
+              }
+              @if (formHours !== null && formHours % 1 !== 0) {
+                <div class="invalid-feedback">
+                  Hours must be a whole number (no decimals).
+                </div>
+              }
+            </div>
+
+            <!-- Form Actions -->
+            <div class="d-flex gap-2">
+              <button
+                type="submit"
+                class="btn btn-primary flex-grow-1"
+                [disabled]="!isFormValid() || isSubmitting()">
+                @if (isSubmitting()) {
+                  <span class="spinner-border spinner-border-sm me-2"></span>
+                }
+                @if (isEditing) {
+                  Update Entry
+                } @else {
+                  Create Entry
+                }
+              </button>
+
+              @if (isEditing) {
+                <button type="button" class="btn btn-outline-secondary" (click)="resetForm()">
+                  Cancel
+                </button>
+              }
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Confirm Delete</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    @if (deletingEntry) {
+      <p>Are you sure you want to delete the work entry for:</p>
+      <ul class="mb-0">
+        <li><strong>Project:</strong> {{ deletingEntry.assignment.project.name }}</li>
+        <li><strong>Month:</strong> {{ deletingEntry.yearMonth }}</li>
+        <li><strong>Hours:</strong> {{ deletingEntry.hourCount }}</li>
+      </ul>
+      <p class="text-muted mt-2">This action cannot be undone.</p>
+    }
+  </div>
+  <div class="modal-footer d-flex justify-content-between">
+    <button type="button" class="btn btn-outline-primary" (click)="modal.dismiss()">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="deleteWorkEntry(); modal.close()">Delete</button>
+  </div>
+</ng-template>

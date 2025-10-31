@@ -1,0 +1,125 @@
+.table-container {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-base);
+  overflow-x: auto;
+}
+
+.table {
+  margin-bottom: 0;
+  font-size: var(--text-sm);
+}
+
+.table thead th {
+  background-color: var(--primary-dark) !important;
+  color: var(--text-on-primary);
+  border: none;
+  font-weight: var(--font-semibold);
+  padding: var(--space-3);
+  position: relative;
+}
+
+.table tbody td {
+  padding: var(--space-3);
+  border-color: var(--border-color);
+  vertical-align: middle;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > td {
+  background-color: var(--bg-secondary);
+}
+
+.table-hover > tbody > tr:hover > td {
+  background-color: var(--bg-tertiary);
+}
+
+.table-bordered {
+  border: var(--border-width) solid var(--border-color);
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: var(--border-width) solid var(--border-color);
+}
+
+.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--transition-fast);
+}
+
+.sortable:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.sort-icon {
+  margin-left: var(--space-2);
+  font-style: normal;
+  opacity: 0.7;
+}
+
+.pagination-info {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pagination-current {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  font-weight: var(--font-medium);
+  margin: 0 var(--space-2);
+}
+
+.text-muted {
+  color: var(--text-tertiary);
+}
+
+.table-link {
+  color: var(--primary-main);
+  text-decoration: none;
+  font-weight: var(--font-medium);
+  transition: color var(--transition-fast);
+}
+
+.table-link:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* Action cell styling */
+.action-cell {
+  white-space: nowrap;
+}
+
+.action-cell .btn {
+  margin-right: var(--space-1);
+}
+
+.action-cell .btn:last-child {
+  margin-right: 0;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .table-container {
+    padding: var(--space-2);
+  }
+
+  .pagination-controls {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .pagination-info {
+    text-align: center;
+    margin-bottom: var(--space-2);
+  }
+}

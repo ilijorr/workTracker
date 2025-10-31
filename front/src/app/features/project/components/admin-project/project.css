@@ -1,0 +1,20 @@
+/* Use global .page-header class instead */
+
+.project-description {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: 600px;
+  margin: var(--space-4) auto 0;
+}
+
+/* Use global .assignments-section, .no-assignments, .error-message classes instead */
+
+/* Use global .selection-list, .selection-option, .selection-info classes instead */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .project-description {
+    font-size: var(--text-base);
+  }
+}

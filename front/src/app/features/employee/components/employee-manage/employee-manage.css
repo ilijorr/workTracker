@@ -1,0 +1,85 @@
+.management-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-8);
+  margin-top: var(--space-6);
+}
+
+.employee-table-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+
+.actions-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.action-card {
+  background: var(--bg-primary);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
+}
+
+.action-card h3 {
+  color: var(--text-primary);
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: var(--border-width) solid var(--border-color);
+}
+
+.action-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .management-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .actions-panel {
+    order: -1;
+    flex-direction: row;
+    gap: var(--space-4);
+  }
+
+  .action-card {
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .management-grid {
+    margin-top: var(--space-4);
+    gap: var(--space-4);
+  }
+
+  .actions-panel {
+    flex-direction: column;
+  }
+
+  .action-card {
+    padding: var(--space-4);
+  }
+
+  .action-card h3 {
+    font-size: var(--text-lg);
+  }
+}

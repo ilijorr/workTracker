@@ -1,0 +1,54 @@
+/* Use global .page-header class instead */
+
+.employee-stats {
+  margin-top: var(--space-4);
+}
+
+.stat-card {
+  background: var(--bg-primary);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  min-width: 120px;
+}
+
+.stat-card h3 {
+  color: var(--primary-main);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  margin-bottom: var(--space-1);
+  line-height: var(--leading-tight);
+}
+
+.stat-card p {
+  font-size: var(--text-sm);
+  margin-bottom: 0;
+}
+
+.vacation-days-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vacation-days-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--primary-main);
+}
+
+/* Use global .assignments-section, .no-assignments, .error-message classes instead */
+
+/* Use global .selection-list, .selection-option, .selection-info classes instead */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .employee-stats {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-card {
+    width: 100%;
+    max-width: 200px;
+  }
+}
