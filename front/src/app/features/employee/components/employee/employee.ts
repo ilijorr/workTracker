@@ -16,7 +16,7 @@ import {TableConfig} from '../../../../shared/models/table-column';
 import {ProjectService} from '../../../project/project.service';
 import {Project} from '../../../../models/Project';
 import {AssignmentRequest} from '../../../../models/request/AssignmentRequest';
-import {AuthService} from '../../../../core/services/auth-service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-employee',
@@ -31,6 +31,7 @@ export class Employee implements OnInit {
   private tableConfigService: TableConfigService = inject(TableConfigService);
   private modalService: NgbModal = inject(NgbModal);
   private route: ActivatedRoute = inject(ActivatedRoute);
+  private title: Title = inject(Title);
 
   employeeId = signal<number>(-1);
   employee = signal<EmployeeModel | null>(null);
@@ -72,6 +73,7 @@ export class Employee implements OnInit {
         this.loadAssignments();
       }
     });
+    this.title.setTitle(`${this.employee()?.username} | Trekk`);
   }
 
   private loadEmployee(id: number) {

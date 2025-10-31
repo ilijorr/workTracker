@@ -16,6 +16,7 @@ import {TableConfig} from '../../../../shared/models/table-column';
 import {EmployeeService} from '../../../employee/employee-service';
 import {Employee} from '../../../../models/Employee';
 import {AssignmentRequest} from '../../../../models/request/AssignmentRequest';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-project',
@@ -30,6 +31,7 @@ export class Project implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);
   private tableConfigService: TableConfigService = inject(TableConfigService);
   private modalService: NgbModal = inject(NgbModal);
+  private title: Title = inject(Title);
 
   projectId = signal<number>(-1);
   project = signal<ProjectModel | null>(null);
@@ -65,6 +67,7 @@ export class Project implements OnInit {
         this.loadAssignments();
       }
     });
+    this.title.setTitle(`${this.project()?.name} | Trekk`);
   }
 
   private loadProject(id: number) {

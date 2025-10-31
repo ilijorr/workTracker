@@ -11,6 +11,7 @@ import {employeeGuard} from './core/guards/employee-guard';
 export const routes: Routes = [
   {
     path: 'login',
+    title: 'Login | Trekk',
     loadComponent: () =>
       import('./features/auth/components/login/login').then(m => m.Login),
     canActivate: [
@@ -19,6 +20,7 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
+    title: 'Dashboard | Trekk',
     loadComponent: () =>
       import('./features/dashboard/components/role-based-dashboard/role-based-dashboard').then(m => m.RoleBasedDashboard),
     canActivate: [
@@ -27,6 +29,7 @@ export const routes: Routes = [
   },
   {
     path: 'employee/manage',
+    title: 'Employees | Trekk',
     loadComponent: () =>
       import('./features/employee/components/employee-manage/employee-manage').then(m => m.EmployeeManageComponent),
     canActivate: [
@@ -43,6 +46,7 @@ export const routes: Routes = [
   },
   {
     path: 'vacation/manage',
+    title: 'Vacations | Trekk',
     loadComponent: () =>
       import('./features/vacation/components/vacation-manage/vacation-manage').then(m => m.VacationManageComponent),
     canActivate: [
@@ -51,6 +55,7 @@ export const routes: Routes = [
   },
   {
     path: 'vacation',
+    title: 'Vacations | Trekk',
     loadComponent: () =>
       import('./features/vacation/components/vacation-employee/vacation-employee').then(m => m.VacationEmployeeComponent),
     canActivate: [
@@ -59,11 +64,13 @@ export const routes: Routes = [
   },
   {
     path: 'error',
+    title: 'Error | Trekk',
     loadComponent: () =>
       import('./core/components/error-page/error-page').then(m => m.ErrorPageComponent),
   },
   {
     path: 'project/manage',
+    title: 'Projects | Trekk',
     loadComponent: () =>
       import('./features/project/components/project-manage/project-manage').then(m => m.ProjectManageComponent),
     canActivate: [
